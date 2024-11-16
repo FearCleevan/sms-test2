@@ -1,0 +1,210 @@
+/* Basic styles for the sidebar */
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Topbar styling */
+.topbar {
+    display: flex;
+    position: sticky; /* Use sticky to make the topbar stick when scrolling */
+    top: 0; /* Stick at the top */
+    margin-left: 250px; /* Adjust for the sidebar width */
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff; /* Background color */
+    padding: 15px 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow for better separation */
+    z-index: 1000; /* Ensure it's on top of other elements */
+}
+
+/* Dashboard title */
+.topbar .title {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.topbar .title i {
+    margin-right: 10px; /* Spacing between icon and text */
+}
+
+
+/* .search-box {
+    display: flex;
+    align-items: center;
+    flex: 1; 
+    width: 200px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.search-box input[type="text"] {
+    width: 400px;
+    margin-left: 400px; 
+    padding: 8px 15px;
+    border: 1px solid #b00;
+    outline: none;
+}
+
+.search-box button {
+    padding: 9px 16px;
+    border: none;
+    background-color: #b00; 
+    color: white;
+    cursor: pointer;
+}
+
+.search-box button:hover {
+    background-color: #d00; 
+} */
+
+/* User profile */
+.user-profile {
+    display: flex;
+    align-items: center;
+    margin-right: 50px; /* Space between user profile and the edge */
+}
+
+.user-profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Circular profile picture */
+    margin-right: 10px; /* Space between image and name */
+}
+
+.user-profile .user-name {
+    margin-right: 10px; /* Space between username and dropdown icon */
+}
+
+.user-profile .dropdown-icon {
+    cursor: pointer;
+}
+
+
+.sidenav-menu {
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    background-color: #000000;
+    padding-top: 20px;
+    overflow-x: hidden;
+}
+
+.logo-dashboard img {
+    width: 220px;
+    margin-bottom: 70px;
+    margin-left: 10px;
+}
+
+.sidebar-menu.collapsed {
+    width: 70px;
+}
+
+/* Adjust icon positions when collapsed */
+.sidebar-menu.collapsed ul li a {
+    justify-content: center;
+}
+
+/* Hide the sidebar title and text when collapsed */
+.sidebar-menu.collapsed .sidebar-title,
+.sidebar-menu.collapsed ul li a span,
+.sidebar-menu.collapsed .sidebar-dropdown .dropdown-icon {
+    display: none;
+}
+
+.sidebar-menu h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    margin-left: 30px;
+}
+
+.sidebar-menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar-menu ul li {
+    margin: 10px 0;
+}
+
+/* Main menu links */
+.sidebar-menu ul li a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.sidebar-menu ul li a i {
+    margin-right: 10px; /* Add space between icon and text */
+    font-size: 15px; /* Icon size */
+}
+
+.sidebar-menu ul li a:hover {
+    background-color: #34495e;
+}
+
+/* Active menu item */
+.sidebar-menu ul li a.active {
+    background-color: #2980b9;
+    color: #ffffff;
+}
+
+.sidebar-menu ul li a.active i {
+    color: #ffffff;
+}
+
+/* Dropdown styling */
+.sidebar-dropdown-btn {
+    cursor: pointer;
+}
+
+.sidebar-dropdown-content {
+    display: none;
+    list-style-type: none;
+    padding: 0;
+    margin: 5px 0 0 15px;
+}
+
+/* Dropdown menu links */
+.sidebar-dropdown-content li a {
+    font-size: 12px;
+    padding: 8px;
+    color: #bdc3c7;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+}
+
+.sidebar-dropdown-content li a:hover {
+    background-color: #34495e;
+    color: #ecf0f1;
+}
+
+.sidebar-dropdown-content li a.active {
+    background-color: #2980b9;
+    color: #ffffff;
+}
+
+/* Active dropdown */
+.sidebar-menu .sidebar-dropdown.active .sidebar-dropdown-content {
+    display: block;
+}
+
+.sidebar-menu .sidebar-dropdown .dropdown-icon {
+    margin-left: auto; /* Move the dropdown icon to the far right */
+    transition: transform 0.3s;
+}
+
+.main-content {
+    margin-left: 260px;
+    padding: 20px;
+}

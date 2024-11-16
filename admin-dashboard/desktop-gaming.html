@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desktop</title>
+    <link rel="stylesheet" href="desktop-gaming.css">
+    <link rel="icon" href="./images/Asset 2.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- Side Navbar Section -->
+    <div class="sidenav">
+        <div class="logo-dashboard">
+            <img src="./images/Final-Logo-2.png" alt="">
+        </div>
+        <a href="index.html">
+            <i class="fa fa-tachometer-alt"></i> Dashboard
+        </a>
+
+        <button class="dropdown-btn">
+            <i class="fa fa-boxes"></i> Stocks
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href="./add-prods.html">
+                <i class="fa fa-plus"></i> Adding Products
+            </a>
+        </div>
+
+        <button class="dropdown-btn">
+            <i class="fa fa-cogs"></i> Components
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href="#chassing-fan"><i class="fa fa-fan"></i> Chassing Fan</a>
+            <a href="#cpu-cooling"><i class="fa fa-thermometer-half"></i> CPU Cooling</a>
+            <a href="#graphics-card"><i class="fa fa-video"></i> Graphics Card</a>
+            <a href="#hdd"><i class="fa fa-hdd"></i> Hard Disk Drive</a>
+            <a href="#ssd"><i class="fa fa-database"></i> Solid State Drive</a>
+            <a href="#ram"><i class="fa fa-memory"></i> RAM</a>
+            <a href="#motherboard"><i class="fa fa-microchip"></i> Motherboard</a>
+            <a href="#pc-case"><i class="fa fa-desktop"></i> PC Case</a>
+            <a href="#power-supply"><i class="fa fa-plug"></i> Power Supply</a>
+            <a href="#processor"><i class="fa fa-microchip"></i> Processor</a>
+        </div>
+
+        <button class="dropdown-btn" id="desktop-btn">
+            <i class="fa fa-desktop"></i> Desktop
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container" id="desktop-dropdown">
+            <a href="#gaming-build" id="gaming-build-link"><i class="fa fa-gamepad"></i> Gaming Build</a>
+            <a href="#productivity-build" id="productivity-build-link"><i class="fa fa-briefcase"></i> Productivity
+                Build</a>
+            <a href="#home-build" id="home-build-link"><i class="fa fa-home"></i> Home Use Build</a>
+        </div>
+
+        <button class="dropdown-btn">
+            <i class="fa fa-laptop"></i> Laptop
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href="#gaming-laptop"><i class="fa fa-gamepad"></i> Gaming Laptop</a>
+            <a href="#productivity-laptop"><i class="fa fa-briefcase"></i> Productivity Laptop</a>
+            <a href="#chromebook"><i class="fa fa-laptop"></i> Chromebook</a>
+        </div>
+
+        <a href="#orders">
+            <i class="fa fa-shopping-cart"></i> Orders
+        </a>
+        <a href="#total-order">
+            <i class="fa fa-list"></i> Total Order
+        </a>
+        <a href="#purchase-history">
+            <i class="fa fa-history"></i> Purchase History
+        </a>
+        <a href="#return-history">
+            <i class="fa fa-undo"></i> Return History
+        </a>
+        <a href="#messages">
+            <i class="fa fa-envelope"></i> Messages
+        </a>
+        <a href="#settings">
+            <i class="fa fa-cog"></i> Settings
+        </a>
+    </div>
+    <!-- Side Navbar Section -->
+
+    <!-- Topbar Header Section -->
+    <div class="topbar">
+        <!-- Title and Dashboard icon -->
+        <div class="title">
+            <i class="fas fa-bars"></i>
+            <span>Desktop</span> <!-- Display the page name here -->
+        </div>
+
+        <!-- Search box -->
+        <div class="search-box">
+            <input type="text" placeholder="Search Here">
+            <button title="search"><i class="fas fa-search"></i></button>
+        </div>
+
+        <!-- User Profile -->
+        <div class="user-profile">
+            <img src="./images/peter24 (1).jpg" alt="User Profile"> <!-- Replace with the actual user image -->
+            <span class="user-name">Admin User</span>
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+        </div>
+    </div>
+
+
+    <!-- Main content -->
+    <div class="main-content">
+        <div class="head-main-content">
+            <h5>GAMING BUILDS TABLE</h5>
+        </div>
+        <div class="product-details-table">
+            <div class="table-wrapper">
+                <table class="fl-table">
+                    <thead>
+                        <tr>
+                            <th>COUNT</th>
+                            <th>PRODUCT IMAGE</th>
+                            <th>ITEM CODE</th>
+                            <th>PRODUCT CATEGORY</th>
+                            <th>PRODUCT SUBCATEGORY</th>
+                            <th>PRODUCT NAME</th>
+                            <th>PRODUCT DESCRIPTION</th>
+                            <th>ADDITIONAL PRODUCT DESCRIPTION</th>
+                            <th>OPERATING SYSTEM</th>
+                            <th>CPU</th>
+                            <th>MOTHERBOARD</th>
+                            <th>GRAPHICS CARD</th>
+                            <th>SSD HDD</th>
+                            <th>HDD</th>
+                            <th>POWER SUPPLY</th>
+                            <th>POWER EFFICIENCY LEVEL</th>
+                            <th>DIMENSIONS</th>
+                            <th>WEIGHT</th>
+                            <th>QUANTITY</th>
+                            <th>PRICE</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>
+                                <a href="product-overview.html">
+                                    <img src="./images/DESKTOP1.png" alt="Product Image" class="product-image">
+                                </a>
+                            </td>
+                            <td class="truncate-text">ITEM-CODE-30839</td>
+                            <td class="truncate-text">DESKTOP</td>
+                            <td class="truncate-text">GAMING BUILD</td>
+                            <td class="truncate-text">Vision Elite RS 14NUG9-831US Gaming Desktop</td>
+                            <td class="truncate-text">The VISION ELITE RS 14NUG9-831US Gaming Desktop sets its sights on combining the very best in cutting-edge gaming technology from NVIDIA and Intel into a spectacular eye-catching design. If you got it flaunt it, built into the MSI Maestro chassis, a one-piece 270-degree tempered glass panel provides a panoramic view of the interior without obstructive metal at the corners, ensuring a seamless showcase of internal components. Discover unparalleled performance and see how the Vision Elite dominates in your favorite titles, ensuring an immersive and thrilling gaming experience in every game.</td>
+                            <td class="truncate-text">Free 27" QHD G274QPF QD Gaming Monitor-Limited Time Offer
+                                Windows 11 Pro
+                                Intel Core™ i9-14900KF 3.2 GHz
+                                NVIDIA® GeForce RTX 4080 SUPER (Vertical)
+                                32GB (2 x 16GB) DDR5 6000 RGB  
+                                2TB M.2 NVMe SSD
+                                2.5 Gigabit Ethernet
+                                Intel® Wi-Fi 7 | Bluetooth 5.4
+                                MSI Z790 Motherboard - A durable, high-performance motherboard made for gaming
+                                Liquid RGB Cooling - Keeps system stable and running great during long gaming sessions
+                                Panoramic tempered glass panel - Showcase your top tier components in style
+                                Powerful Wi-Fi 7 for unprecedented wireless network speeds and a stable gaming experience
+                                Supports the latest DDR5 memory
+                                PCIe Gen 5 bandwidth support, improved workloads, and render capabilities
+                                Enrich your experience with the included MSI Center software.</td>
+                            <td class="truncate-text">Windows 11 Pro</td>
+                            <td class="truncate-text">14th Gen Intel® Core™ i9-14900KF</td>
+                            <td class="truncate-text">PRO Z790 WIFI</td>
+                            <td class="truncate-text">NVIDIA® GeForce RTX 4080 SUPER</td>
+                            <td class="truncate-text">2TB M.2 NVMe</td>
+                            <td class="truncate-text">-</td>
+                            <td class="truncate-text">1000W</td>
+                            <td class="truncate-text">80+ Gold</td>
+                            <td class="truncate-text">18.5" x 11.81" x 18.66"</td>
+                            <td class="truncate-text">47.3 Ibs (product) / 56.8 Ibs (package)</td>
+                            <td class="truncate-text">10</td>
+                            <td class="truncate-text">&#8369;120,195.05</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>
+                                <a href="product-overview.html">
+                                    <img src="./images/DESKTOP1.png" alt="Product Image" class="product-image">
+                                </a>
+                            </td>
+                            <td class="truncate-text">ITEM-CODE-30839</td>
+                            <td class="truncate-text">DESKTOP</td>
+                            <td class="truncate-text">GAMING BUILD</td>
+                            <td class="truncate-text">Vision Elite RS 14NUG9-831US Gaming Desktop</td>
+                            <td class="truncate-text">The VISION ELITE RS 14NUG9-831US Gaming Desktop sets its sights on combining the very best in cutting-edge gaming technology from NVIDIA and Intel into a spectacular eye-catching design. If you got it flaunt it, built into the MSI Maestro chassis, a one-piece 270-degree tempered glass panel provides a panoramic view of the interior without obstructive metal at the corners, ensuring a seamless showcase of internal components. Discover unparalleled performance and see how the Vision Elite dominates in your favorite titles, ensuring an immersive and thrilling gaming experience in every game.</td>
+                            <td class="truncate-text">Free 27" QHD G274QPF QD Gaming Monitor-Limited Time Offer
+                                Windows 11 Pro
+                                Intel Core™ i9-14900KF 3.2 GHz
+                                NVIDIA® GeForce RTX 4080 SUPER (Vertical)
+                                32GB (2 x 16GB) DDR5 6000 RGB  
+                                2TB M.2 NVMe SSD
+                                2.5 Gigabit Ethernet
+                                Intel® Wi-Fi 7 | Bluetooth 5.4
+                                MSI Z790 Motherboard - A durable, high-performance motherboard made for gaming
+                                Liquid RGB Cooling - Keeps system stable and running great during long gaming sessions
+                                Panoramic tempered glass panel - Showcase your top tier components in style
+                                Powerful Wi-Fi 7 for unprecedented wireless network speeds and a stable gaming experience
+                                Supports the latest DDR5 memory
+                                PCIe Gen 5 bandwidth support, improved workloads, and render capabilities
+                                Enrich your experience with the included MSI Center software.</td>
+                            <td class="truncate-text">Windows 11 Pro</td>
+                            <td class="truncate-text">14th Gen Intel® Core™ i9-14900KF</td>
+                            <td class="truncate-text">PRO Z790 WIFI</td>
+                            <td class="truncate-text">NVIDIA® GeForce RTX 4080 SUPER</td>
+                            <td class="truncate-text">2TB M.2 NVMe</td>
+                            <td class="truncate-text">Content 14</td>
+                            <td class="truncate-text">Content 15</td>
+                            <td class="truncate-text">Content 16</td>
+                            <td class="truncate-text">Content 17</td>
+                            <td class="truncate-text">Content 18</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>
+                                <a href="product-overview.html">
+                                    <img src="./images/DESKTOP1.png" alt="Product Image" class="product-image">
+                                </a>
+                            </td>
+                            <td class="truncate-text">ITEM-CODE-30839</td>
+                            <td class="truncate-text">DESKTOP</td>
+                            <td class="truncate-text">GAMING BUILD</td>
+                            <td class="truncate-text">Vision Elite RS 14NUG9-831US Gaming Desktop</td>
+                            <td class="truncate-text">The VISION ELITE RS 14NUG9-831US Gaming Desktop sets its sights on combining the very best in cutting-edge gaming technology from NVIDIA and Intel into a spectacular eye-catching design. If you got it flaunt it, built into the MSI Maestro chassis, a one-piece 270-degree tempered glass panel provides a panoramic view of the interior without obstructive metal at the corners, ensuring a seamless showcase of internal components. Discover unparalleled performance and see how the Vision Elite dominates in your favorite titles, ensuring an immersive and thrilling gaming experience in every game.</td>
+                            <td class="truncate-text">Free 27" QHD G274QPF QD Gaming Monitor-Limited Time Offer
+                                Windows 11 Pro
+                                Intel Core™ i9-14900KF 3.2 GHz
+                                NVIDIA® GeForce RTX 4080 SUPER (Vertical)
+                                32GB (2 x 16GB) DDR5 6000 RGB  
+                                2TB M.2 NVMe SSD
+                                2.5 Gigabit Ethernet
+                                Intel® Wi-Fi 7 | Bluetooth 5.4
+                                MSI Z790 Motherboard - A durable, high-performance motherboard made for gaming
+                                Liquid RGB Cooling - Keeps system stable and running great during long gaming sessions
+                                Panoramic tempered glass panel - Showcase your top tier components in style
+                                Powerful Wi-Fi 7 for unprecedented wireless network speeds and a stable gaming experience
+                                Supports the latest DDR5 memory
+                                PCIe Gen 5 bandwidth support, improved workloads, and render capabilities
+                                Enrich your experience with the included MSI Center software.</td>
+                            <td class="truncate-text">Windows 11 Pro</td>
+                            <td class="truncate-text">14th Gen Intel® Core™ i9-14900KF</td>
+                            <td class="truncate-text">PRO Z790 WIFI</td>
+                            <td class="truncate-text">NVIDIA® GeForce RTX 4080 SUPER</td>
+                            <td class="truncate-text">2TB M.2 NVMe</td>
+                            <td class="truncate-text">Content 14</td>
+                            <td class="truncate-text">Content 15</td>
+                            <td class="truncate-text">Content 16</td>
+                            <td class="truncate-text">Content 17</td>
+                            <td class="truncate-text">Content 18</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                
+            </div>
+        </div>
+    </div>
+    <!-- Main content -->
+
+
+
+    <script>
+        // Script to toggle dropdowns
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+
+        // Handle the dropdown show/hide
+        document.getElementById('desktop-btn').addEventListener('click', function () {
+            this.classList.toggle('active');
+            var dropdownContainer = document.getElementById('desktop-dropdown');
+            dropdownContainer.classList.toggle('show');
+        });
+
+        // Handle the active state for the links
+        document.querySelectorAll('.dropdown-container a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                // Remove 'active' class from all links
+                document.querySelectorAll('.dropdown-container a').forEach(function (item) {
+                    item.classList.remove('active');
+                });
+
+                // Add 'active' class to the clicked link
+                this.classList.add('active');
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>

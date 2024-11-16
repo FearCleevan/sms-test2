@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="add-prods.css">
+    <link rel="icon" href="./images/Asset 2.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- Side Navbar Section -->
+    <div class="sidenav">
+        <div class="logo-dashboard">
+            <img src="./images/Final-Logo-2.png" alt="">
+        </div>
+        <a href="index.html">
+            <i class="fa fa-tachometer-alt"></i> Dashboard
+        </a>
+
+        <button class="dropdown-btn">
+            <i class="fa fa-boxes"></i> Stocks
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href="#adding-products">
+                <i class="fa fa-plus"></i> Adding Products
+            </a>
+        </div>
+
+        <button class="dropdown-btn">
+            <i class="fa fa-cogs"></i> Components
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href="#chassing-fan"><i class="fa fa-fan"></i> Chassing Fan</a>
+            <a href="#cpu-cooling"><i class="fa fa-thermometer-half"></i> CPU Cooling</a>
+            <a href="#graphics-card"><i class="fa fa-video"></i> Graphics Card</a>
+            <a href="#hdd"><i class="fa fa-hdd"></i> Hard Disk Drive</a>
+            <a href="#ssd"><i class="fa fa-database"></i> Solid State Drive</a>
+            <a href="#ram"><i class="fa fa-memory"></i> RAM</a>
+            <a href="#motherboard"><i class="fa fa-microchip"></i> Motherboard</a>
+            <a href="#pc-case"><i class="fa fa-desktop"></i> PC Case</a>
+            <a href="#power-supply"><i class="fa fa-plug"></i> Power Supply</a>
+            <a href="#processor"><i class="fa fa-microchip"></i> Processor</a>
+        </div>
+
+        <button class="dropdown-btn">
+            <i class="fa fa-desktop"></i> Desktop
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href="./desktop-gaming.html"><i class="fa fa-gamepad"></i> Gaming Build</a>
+            <a href="#productivity-build"><i class="fa fa-briefcase"></i> Productivity Build</a>
+            <a href="#home-build"><i class="fa fa-home"></i> Home Use Build</a>
+        </div>
+
+        <button class="dropdown-btn">
+            <i class="fa fa-laptop"></i> Laptop
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-container">
+            <a href="#gaming-laptop"><i class="fa fa-gamepad"></i> Gaming Laptop</a>
+            <a href="#productivity-laptop"><i class="fa fa-briefcase"></i> Productivity Laptop</a>
+            <a href="#chromebook"><i class="fa fa-laptop"></i> Chromebook</a>
+        </div>
+
+        <a href="#orders">
+            <i class="fa fa-shopping-cart"></i> Orders
+        </a>
+        <a href="#total-order">
+            <i class="fa fa-list"></i> Total Order
+        </a>
+        <a href="#purchase-history">
+            <i class="fa fa-history"></i> Purchase History
+        </a>
+        <a href="#return-history">
+            <i class="fa fa-undo"></i> Return History
+        </a>
+        <a href="#messages">
+            <i class="fa fa-envelope"></i> Messages
+        </a>
+        <a href="#settings">
+            <i class="fa fa-cog"></i> Settings
+        </a>
+    </div>
+    <!-- Side Navbar Section -->
+
+    <!-- Topbar Header Section -->
+    <div class="topbar">
+        <!-- Title and Dashboard icon -->
+        <div class="title">
+            <i class="fas fa-bars"></i>
+            <span>Stocks</span> <!-- Display the page name here -->
+        </div>
+
+        <!-- Search box -->
+        <div class="search-box">
+            <input type="text" placeholder="Search Here">
+            <button title="search"><i class="fas fa-search"></i></button>
+        </div>
+
+        <!-- User Profile -->
+        <div class="user-profile">
+            <img src="./images/peter24 (1).jpg" alt="User Profile"> <!-- Replace with the actual user image -->
+            <span class="user-name">Admin User</span>
+            <i class="fas fa-chevron-down dropdown-icon"></i>
+        </div>
+    </div>
+    <!-- Topbar Header Section -->
+
+    <!-- Main content -->
+    <div class="main-content">
+        <div class="head-main-content">
+            <i class="fa fa-plus-circle"></i> Adding Products
+            <button id="add-product-btn" onclick="toggleForm()">Add Product</button>
+        </div>
+        <div class="add-prods" id="add-product-form"> <!-- Form is hidden by default -->
+            <form action="./add-prods.html" class="form-one">
+                <div class="item-details-form">
+                    <div class="category-details">
+                        <div class="category">
+                            <h5>PRODUCT CATEGORY:</h5>
+                        </div>
+                        <div class="dropdown-selection">
+                            <select title="select" id="category-select" onchange="updateSubcategory()">
+                                <option value="" disabled selected>--Select Category--</option>
+                                <option value="components">Components</option>
+                                <option value="desktop">Desktop</option>
+                                <option value="laptop">Laptop</option>
+                            </select>
+                        </div>
+                        <div class="category">
+                            <h5>PRODUCT SUBCATEGORY:</h5>
+                        </div>
+                        <div class="dropdown-selection">
+                            <select title="select" id="subcategory-select" onchange="updateForm()">
+                                <option value="" disabled selected>--Select Subcategory--</option>
+                            </select>
+                        </div>
+                        <div class="category">
+                            <h5>ITEM CODE:</h5>
+                        </div>
+                        <div class="dropdown-selection">
+                            <input class="item-code" type="text" name="item-code" id="item-code"
+                                placeholder="System Generated" disabled>
+                        </div>
+                        <div class="category">
+                            <h5>CREATED DATE:</h5>
+                        </div>
+                        <div class="dropdown-selection">
+                            <input class="item-code" type="text" name="created-date" id="created-date"
+                                placeholder="System Generated" disabled>
+                        </div>
+                        <div class="category">
+                            <h5>CREATED TIME:</h5>
+                        </div>
+                        <div class="dropdown-selection">
+                            <input class="item-code" type="text" name="created-time" id="created-time"
+                                placeholder="System Generated" disabled>
+                        </div>
+                    </div>
+
+                    <div class="product-details-form">
+                        <div class="product-details-category">
+                            <h5>DETAILS SPECIFICATION</h5>
+                        </div>
+                        <div class="divider"></div>
+                        <div id="dynamic-form-fields"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main content -->
+
+
+
+    <script>
+        // Script to toggle dropdowns
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+            dropdown[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var dropdownContent = this.nextElementSibling;
+                if (dropdownContent.style.display === "block") {
+                    dropdownContent.style.display = "none";
+                } else {
+                    dropdownContent.style.display = "block";
+                }
+            });
+        }
+    </script>
+
+    <script>
+        // Define the subcategories for each category
+        const subcategories = {
+            components: [
+                { value: 'chass-fan', text: 'Chassing Fan' },
+                { value: 'cpu-cool', text: 'CPU Cooling' },
+                { value: 'graphics', text: 'Graphics Card' },
+                { value: 'hdd', text: 'Hard Disk Drive' },
+                { value: 'ssd', text: 'Solid State Drive' },
+                { value: 'ram', text: 'Ram' },
+                { value: 'motherboard', text: 'Motherboard' },
+                { value: 'case', text: 'PC Case' },
+                { value: 'processor', text: 'Processor' },
+                { value: 'power-supply', text: 'Power Supply' }
+            ],
+            desktop: [
+                { value: 'gaming-build', text: 'Gaming Build' },
+                { value: 'productivity-build', text: 'Productivity Build' },
+                { value: 'home-use-build', text: 'Home Use Build' }
+            ],
+            laptop: [
+                { value: 'gaming-laptop', text: 'Gaming Laptop' },
+                { value: 'productivity-laptop', text: 'Productivity Laptop' },
+                { value: 'chromebook', text: 'Chromebook' }
+            ]
+        };
+
+        // Update Subcategories based on selected category
+        function updateSubcategory() {
+            const category = document.getElementById('category-select').value;
+            const subcategorySelect = document.getElementById('subcategory-select');
+
+            subcategorySelect.innerHTML = '<option value="" disabled selected>--Select Subcategory--</option>';
+            subcategorySelect.disabled = false;
+
+            subcategories[category].forEach(sub => {
+                const option = document.createElement('option');
+                option.value = sub.value;
+                option.textContent = sub.text;
+                subcategorySelect.appendChild(option);
+            });
+        }
+
+        // Update form fields based on selected subcategory
+        function updateForm() {
+            const subcategory = document.getElementById('subcategory-select').value;
+            const formFields = document.getElementById('dynamic-form-fields');
+
+            let formContent = '';
+
+            switch (subcategory) {
+                case 'chass-fan':
+                    formContent = `
+                <div>
+                    <h5>Fan Size:</h5>
+                    <input type="text" name="fan-size" placeholder="Enter fan size">
+                </div>
+                <div>
+                    <h5>Noise Level:</h5>
+                    <input type="text" name="noise-level" placeholder="Enter noise level">
+                </div>`;
+                    break;
+
+                case 'cpu-cool':
+                    formContent = `
+                <div>
+                    <h5>Cooling Type:</h5>
+                    <input type="text" name="cooling-type" placeholder="Air or Liquid Cooling">
+                </div>
+                <div>
+                    <h5>Compatibility:</h5>
+                    <input type="text" name="compatibility" placeholder="Enter CPU compatibility">
+                </div>`;
+                    break;
+
+                case 'gaming-build':
+                    formContent = `
+                <div class="product-specs">
+                    <div class="breadcrumb-product-category">
+                        <h5>DESKTOP</h5>
+                        <span>&gt;</span>
+                        <h5>GAMING BUILD</h5>
+                    </div>
+                    <div class="product-head-title">
+                        <div class="product-header-title">
+                            <div class="product-title">
+                                <h5>PRODUCT NAME:</h5>
+                                <input class="product-title-section" type="text" name="product-name" required>
+                            </div>
+                            <div class="product-description">
+                                <h5>PRODUCT DESCRIPTION:</h5>
+                                <textarea name="product-description" placeholder="Product Description..." required></textarea>
+                            </div> 
+                            <div class="product-description">
+                                <h5>ADDITIONAL PRODUCT DESCRIPTION:</h5>
+                                <textarea name="second-product-description" placeholder="Product Description..." required></textarea>
+                            </div> 
+                        </div> 
+                        <div class="upload-container">
+                            <label for="photo-upload" class="upload-label">
+                                Upload Photos (Up to 6)
+                            </label>
+                            <input type="file" id="photo-upload" name="photos" accept="image/*" multiple onchange="handleFileSelect(event)" /  required>
+                            <div id="photo-preview" class="photo-preview"></div>
+                            <p id="upload-warning" class="warning-message"></p>
+                        </div>
+                    </div>
+                    <div class="product-section-one">
+                        <div class="product-section-first">
+                            <div>
+                                <h5>OPERATING SYSTEM:</h5>
+                                <input type="text" name="operating-system" required>
+                            </div>
+                            <div>
+                                <h5>MANUFACTURER NUMBER:</h5>
+                                <input type="text" name="manufacturer-number" required>
+                            </div>
+                            <div>
+                                <h5>PRODUCT CONDITION:</h5>
+                                <input type="text" name="product-condition" required>
+                            </div>
+                            <div>
+                                <h5>CPU:</h5>
+                                <input type="text" name="cpu" required>
+                            </div>
+                            <div>
+                                <h5>CHIPSET:</h5>
+                                <input type="text" name="chipset" required>
+                            </div>
+                            <div>
+                                <h5>MOTHERBOARD:</h5>
+                                <input type="text" name="motherboard" required>
+                            </div>
+                        </div>
+                        <div class="product-section-second">
+                            
+                            <div>
+                                <h5>CPU COOLING:</h5>
+                                <input type="text" name="cpu-cooling" required>
+                            </div>
+                            <div>
+                                <h5>GRAPHICS CARD:</h5>
+                                <input type="text" name="graphics" required>
+                            </div>
+                            <div>
+                                <h5>LAN:</h5>
+                                <input type="text" name="lan" required>
+                            </div>
+                            <div>
+                                <h5>WIRELESS LAN:</h5>
+                                <input type="text" name="wireless-lan" required>
+                            </div>
+                            <div>
+                                <h5>BLUETOOTH:</h5>
+                                <input type="text" name="bluetooth" required>
+                            </div>
+                            <div>
+                                <h5>AUDIO:</h5>
+                                <input type="text" name="audio" required>
+                            </div>
+                            <div>
+                                <h5>VIDEO PORT:</h5>
+                                <input type="text" name="video-port" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="divider"></div>
+
+                    <div class="product-section-one">
+                        <div class="product-section-first">
+                            <div>
+                                <h5>I/O (FRONT):</h5>
+                                <input type="text" name="io-front" required>
+                            </div>
+                            <div>
+                                <h5>I/O (REAR):</h5>
+                                <input type="text" name="io-rear" required>
+                            </div>
+                            <div>
+                                <h5>EXPANSION SLOTS:</h5>
+                                <input type="text" name="expansion-slots" required>
+                            </div>
+                            <div>
+                                <h5>USD (FRONT):</h5>
+                                <textarea name="usb-front" placeholder="usb-front" required></textarea>
+                            </div>
+                            <div>
+                                <h5>USD (REAR):</h5>
+                                <textarea name="usb-rear" placeholder="usb-front" required></textarea>
+                            </div>
+                            <div>
+                                <h5>SSD HDD:</h5>
+                                <textarea name="ssd-hdd" placeholder="ssd-hdd" required></textarea>
+                            </div>
+                            <div>
+                                <h5>HDD:</h5>
+                                <textarea name="hdd" placeholder="hdd" required></textarea>
+                            </div>
+                        </div>
+                        <div class="product-section-first">
+                            <div>
+                                <h5>OPTICAL DRIVE:</h5>
+                                <input type="text" name="optical-drive" required>
+                            </div>
+                            <div>
+                                <h5>PERIPHIRALS:</h5>
+                                <textarea name="periphirals" placeholder="periphirals" required></textarea>
+                            </div>
+                            <div>
+                                <h5>POWER SUPPLY:</h5>
+                                <input type="text" name="power-supply" required>
+                            </div>
+                            <div>
+                                <h5>POWER EFFICIENCY LEVEL:</h5>
+                                <input type="text" name="power-efficiency-level" required>
+                            </div>
+                            <div>
+                                <h5>DIMENSIONS:</h5>
+                                <input type="text" name="dimensions" required>
+                            </div>
+                            <div>
+                                <h5>WEIGHT:</h5>
+                                <input type="text" name="weight" required>
+                            </div>
+                            <div>
+                                <h5>MANUFACTURER WARRANTY:</h5>
+                                <input type="text" name="manufacturer-warranty" required>
+                            </div>  
+                        </div>
+                    </div>
+                    <div class="product-additional-info">
+                        <div>
+                            <h5>QTY:</h5>
+                            <input type="number" name="qty" min="1" value="1" required>
+                        </div>
+                        <div>
+                            <h5>PRICE:</h5>
+                            <input type="text" name="price" placeholder="Enter price" required>
+                        </div>
+                        <div>
+                            <button type="submit" class="submit-btn">SUBMIT</button>
+                        </div>
+                    </div>
+                </div>`;
+                    break;
+
+                case 'gaming-laptop':
+                    formContent = `
+                <div class="product-specs">
+                    <div class="breadcrumb-product-category">
+                        <h5>DESKTOP</h5>
+                        <span>&gt;</span>
+                        <h5>GAMING LAPTOP</h5>
+                    </div>
+                    <div class="product-head-title">
+                        <div class="product-header-title">
+                            <div class="product-title">
+                                <h5>PRODUCT NAME:</h5>
+                                <input class="product-title-section" type="text" name="product-name" required>
+                            </div>
+                            <div class="product-description">
+                                <h5>PRODUCT DESCRIPTION:</h5>
+                                <textarea name="video-port" placeholder="Product Description..." required></textarea>
+                            </div> 
+                        </div> 
+                        <div class="upload-container">
+                            <label for="photo-upload" class="upload-label">
+                                Upload Photos (Up to 6)
+                            </label>
+                            <input type="file" id="photo-upload" name="photos" accept="image/*" multiple onchange="handleFileSelect(event)" /  required>
+                            <div id="photo-preview" class="photo-preview"></div>
+                            <p id="upload-warning" class="warning-message"></p>
+                        </div>
+                    </div>
+                    <div class="product-section-one">
+                        <div class="product-section-first">
+                            <div>
+                                <h5>OPERATING SYSTEM:</h5>
+                                <input type="text" name="operating-system" required>
+                            </div>
+                            <div>
+                                <h5>MANUFACTURER NUMBER:</h5>
+                                <input type="text" name="manufacturer-number" required>
+                            </div>
+                            <div>
+                                <h5>PRODUCT CONDITION:</h5>
+                                <input type="text" name="product-condition" required>
+                            </div>
+                            <div>
+                                <h5>CPU:</h5>
+                                <input type="text" name="cpu" required>
+                            </div>
+                            <div>
+                                <h5>PROCESSOR SPEED:</h5>
+                                <input type="text" name="processor-speed" required>
+                            </div>
+                            <div>
+                                <h5>CHIPSET:</h5>
+                                <input type="text" name="chipset" required>
+                            </div>
+                        </div>
+                        <div class="product-section-second">
+                            <div>
+                                <h5>CHIPSET:</h5>
+                                <input type="text" name="chipset" required>
+                            </div>
+                            <div>
+                                <h5>GRAPHICS CARD:</h5>
+                                <input type="text" name="graphics" required>
+                            </div>
+                            <div>
+                                <h5>VIDEO MEMORY:</h5>
+                                <input type="text" name="video-memory" required>
+                            </div>
+                            <div>
+                                <h5>MEMORY:</h5>
+                                <input type="text" name="memory" required>
+                            </div>
+                            <div>
+                                <h5>LAN:</h5>
+                                <input type="text" name="lan" required>
+                            </div>
+                            <div>
+                                <h5>WIRELESS LAN:</h5>
+                                <input type="text" name="wireless-lan" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="divider"></div>
+
+                    <div class="product-section-one">
+                        <div class="product-section-first">
+                            <div>
+                                <h5>BLUETOOTH:</h5>
+                                <input type="text" name="bluetooth" required>
+                            </div>
+                            <div>
+                                <h5>VIDEO PORT:</h5>
+                                <input type="text" name="video-port" required>
+                            </div>
+                            <div>
+                                <h5>USB:</h5>
+                                <input type="text" name="usb" required>
+                            </div>
+                            <div>
+                                <h5>AUDIO PORT:</h5>
+                                <input type="text" name="audio-port" required>
+                            </div>
+                            <div>
+                                <h5>TYPE-C PORT:</h5>
+                                <textarea name="type-c-port" placeholder="video port" required></textarea>
+                            </div>
+                            <div>
+                                <h5>SSD HDD:</h5>
+                                <textarea name="ssd-hdd" placeholder="I/O front" required></textarea>
+                            </div>
+                            <div>
+                                <h5>OPTICAL DRIVE:</h5>
+                                <textarea name="optical-drive" placeholder="I/O rear"></textarea>
+                            </div>
+                            <div>
+                                <h5>CARD READER:</h5>
+                                <textarea name="card-reader" placeholder="I/O rear"></textarea>
+                            </div>
+                            <div>
+                                <h5>WEBCAM:</h5>
+                                <textarea name="webcam" placeholder="I/O rear"></textarea>
+                            </div>
+                            <div>
+                                <h5>VR READY:</h5>
+                                <textarea name="vr-ready" placeholder="I/O rear"></textarea>
+                            </div>
+                        </div>
+                        <div class="product-section-first">
+                            <div>
+                                <h5>KEYBOARD:</h5>
+                                <textarea name="keyboard" required></textarea>
+                            </div>
+                            <div>
+                                <h5>SPEAKER:</h5>
+                                <input type="text" name="speaker" required>
+                            </div>
+                            <div>
+                                <h5>AC POWER ADAPTER:</h5>
+                                <input type="text" name="ac-power-adapter" required>
+                            </div>
+                            <div>
+                                <h5>POWER EFFICIENCY LEVEL:</h5>
+                                <input type="text" name="power-efficiency-level" required>
+                            </div>
+                            <div>
+                                <h5>BATTERY PACK:</h5>
+                                <input type="text" name="battery-pack" required>
+                            </div>
+                            <div>
+                                <h5>SCREEN SIZE:</h5>
+                                <input type="text" name="screen-size" required>
+                            </div>
+                            <div>
+                                <h5>RESOLUTION:</h5>
+                                <input type="text" name="resolution" required>
+                            </div>
+                            <div>
+                                <h5>COLOR:</h5>
+                                <input type="text" name="color" required>
+                            </div>
+                            <div>
+                                <h5>DIMENSIONS:</h5>
+                                <input type="text" name="dimensions" required>
+                            </div>
+                            <div>
+                                <h5>WEIGHT:</h5>
+                                <input type="text" name="weight" required>
+                            </div>
+                            <div>
+                                <h5>MANUFACTURER WARRANTY:</h5>
+                                <input type="text" name="manufacturer-warranty" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-additional-info">
+                        <div>
+                            <h5>QTY:</h5>
+                            <input type="number" name="qty" min="1" value="1" required>
+                        </div>
+                        <div>
+                            <h5>PRICE:</h5>
+                            <input type="text" name="price" placeholder="Enter price" required>
+                        </div>
+                        <div>
+                            <button type="submit" class="submit-btn">SUBMIT</button>
+                        </div>
+                    </div>
+                </div>`;
+                    break;
+
+                default:
+                    formContent = `<p>Select a subcategory to see more details.</p>`;
+            }
+
+            formFields.innerHTML = formContent;
+        }
+
+        // Toggle form visibility and generate time/date/item-code
+        function toggleForm() {
+            const form = document.getElementById('add-product-form');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none'; // Toggle form visibility
+
+            if (form.style.display === 'block') {
+                // Generate current date and time
+                const now = new Date();
+                const createdDate = now.toISOString().split('T')[0]; // YYYY-MM-DD
+                const createdTime = now.toTimeString().split(' ')[0]; // HH:MM:SS
+
+                // Set the values to the input fields
+                document.getElementById('created-date').value = createdDate;
+                document.getElementById('created-time').value = createdTime;
+
+                // Simulate generating an item code (you can implement your logic here)
+                document.getElementById('item-code').value = 'ITEM-CODE-' + Math.floor(Math.random() * 100000); // Example item code
+            }
+        }
+
+        function handleFileSelect(event) {
+            const fileInput = event.target;
+            const previewContainer = document.getElementById('photo-preview');
+            const warningMessage = document.getElementById('upload-warning');
+
+            // Clear previous previews
+            previewContainer.innerHTML = '';
+            warningMessage.textContent = '';
+
+            const files = fileInput.files;
+            const maxPhotos = 6;
+
+            // Check if more than 6 photos are selected
+            if (files.length > maxPhotos) {
+                warningMessage.textContent = `You can upload up to ${maxPhotos} photos only.`;
+                return;
+            }
+
+            // Loop through selected files and create image previews
+            Array.from(files).forEach((file, index) => {
+                if (index < maxPhotos) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        previewContainer.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>

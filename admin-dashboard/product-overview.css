@@ -1,0 +1,207 @@
+/* Basic styles for the sidebar */
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Topbar styling */
+.topbar {
+    display: flex;
+    position: sticky; /* Use sticky to make the topbar stick when scrolling */
+    top: 0; /* Stick at the top */
+    margin-left: 250px; /* Adjust for the sidebar width */
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff; /* Background color */
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow for better separation */
+    z-index: 1000; /* Ensure it's on top of other elements */
+}
+
+/* Dashboard title */
+.topbar .title {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.topbar .title i {
+    margin-right: 10px; /* Spacing between icon and text */
+}
+
+/* Search bar */
+.search-box {
+    display: flex;
+    align-items: center;
+    flex: 1; /* This ensures the search box takes up available space */
+    width: 200px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.search-box input[type="text"] {
+    width: 400px; /* Adjust the width of the search box */
+    margin-left: 400px; /* Centering the search bar */
+    padding: 8px 15px;
+    border: 1px solid #b00; /* Border color */
+    outline: none;
+}
+
+.search-box button {
+    padding: 9px 16px;
+    border: none;
+    background-color: #b00; /* Red button background */
+    color: white;
+    cursor: pointer;
+}
+
+.search-box button:hover {
+    background-color: #d00; /* Darker red on hover */
+}
+
+/* User profile */
+.user-profile {
+    display: flex;
+    align-items: center;
+    margin-right: 50px; /* Space between user profile and the edge */
+}
+
+.user-profile img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Circular profile picture */
+    margin-right: 10px; /* Space between image and name */
+}
+
+.user-profile .user-name {
+    margin-right: 10px; /* Space between username and dropdown icon */
+}
+
+.user-profile .dropdown-icon {
+    cursor: pointer;
+}
+
+
+.sidenav {
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    background-color: #000000;
+    padding-top: 20px;
+    overflow-x: hidden;
+}
+
+.logo-dashboard img {
+    width: 220px;
+    margin-bottom: 70px;
+    margin-left: 10px;
+}
+
+.sidenav a, .dropdown-btn {
+    padding: 15px 20px;
+    text-decoration: none;
+    font-size: 13px;
+    color: #fff;
+    display: block;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+    width: 100%;
+}
+
+.sidenav a:hover, .dropdown-btn:hover {
+    background-color: #b00;
+}
+
+.dropdown-container {
+    display: none;
+    background-color: #383838;
+    padding-left: 20px;
+}
+
+.sidenav .active {
+    background-color: #b00;
+    color: white;
+}
+
+/* Toggle icon */
+.dropdown-btn i {
+    margin-right: 10px;
+}
+
+.dropdown-container a {
+    font-size: 11px;
+}
+
+.main-content {
+    margin-left: 270px;
+    padding-bottom: 5px;
+    height: auto;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.head-main-content {
+    background-color: #eeeeee;
+    border-bottom: 1px solid rgb(148, 148, 148);
+}
+
+.head-main-content h5 {
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+.product-details-table {
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.product-overview {
+    display: flex; /* Use Flexbox to align children in a row */
+    justify-content: space-between; /* Optional: space out the sections */
+    padding: 20px; /* Add padding for better spacing */
+    background-color: #f9f9f9; /* Optional: background color */
+}
+
+.product-overview-first {
+    flex: 2; /* Take up twice as much space as the second section */
+    margin-right: 20px; /* Space between the two sections */
+}
+
+.product-overview-second {
+    flex: 2; /* Take up less space */
+}
+
+.product-overview-second span {
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.product-image-large {
+    width: 200px; /* Ensure the image is responsive */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Optional styling for headings and paragraphs */
+h2 {
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 18px;
+    margin-top: 15px; /* Spacing above headings */
+}
+
+p, li {
+    font-size: 14px;
+    line-height: 1.5;
+}
