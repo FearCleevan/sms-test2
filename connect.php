@@ -11,7 +11,4 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Remove or comment out this line
-// echo "Connected successfully";
-
 ?>

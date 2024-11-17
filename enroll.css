@@ -5,14 +5,18 @@
     font-family: 'Poppins', sans-serif;
     /* Set the default font */
 }
-
+/* MAIN CONTAINER */
 .main-container {
     width: auto;
     height: auto;
     display: flex;
     background-color: #f0f0f0;
-    margin-top: 120px;
-    margin-left: 260px;
+    margin-top: 90px;
+    margin-left: 250px;
+}
+
+.main-container.collapsed {
+    margin-left: 70px;
 }
 
 .sub-main-container {
@@ -58,8 +62,10 @@
 .main-container-header {
     background-color: rgb(212, 212, 212);
     display: flex;
-    justify-content: space-between; /* Positions items at start and end */
-    align-items: center; /* Vertically centers content */
+    justify-content: space-between;
+    /* Positions items at start and end */
+    align-items: center;
+    /* Vertically centers content */
 }
 
 .sub-main-container-header {
@@ -72,7 +78,8 @@
 }
 
 .sub-main-container-header.start i {
-    margin-right: 10px; /* Adds space to the right of the icon */
+    margin-right: 10px;
+    /* Adds space to the right of the icon */
 }
 
 .sub-main-container-header.end button {
@@ -103,7 +110,7 @@
     margin-bottom: 8px;
     font-size: 18px;
     font-weight: 600;
-    margin:  6px 0;
+    margin: 6px 0;
     color: #333;
     margin-left: 10px;
     margin-top: 10px;
@@ -150,11 +157,11 @@ form .enroll-fields .enroll-input-fields {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.13);
 }
 
-.enroll-input-fields input[input="date"]{
+.enroll-input-fields input[input="date"] {
     color: #707070;
 }
 
-.enroll-input-fields input[input="date"]:valid{
+.enroll-input-fields input[input="date"]:valid {
     color: #333;
 }
 
@@ -186,4 +193,68 @@ form button:hover {
 form button i {
     margin: 0 6px;
 }
+
+/* PROFILE IMAGE UPLOAD */
+/* Container styling */
+.profile-photo-container {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    margin-top: 20px;
+}
+
+/* Circle image preview */
+.profile-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    border: 1       px solid #ddd;
+    margin: 0 auto 10px;
+}
+
+.profile-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Upload button styling */
+.upload-label {
+    display: inline-block;
+    cursor: pointer;
+    padding: 5px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: opacity 0.3s;
+}
+
+.upload-label:hover {
+    opacity: 0.7;
+}
+
+#uploadText {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* PROFILE IMAGE UPLOAD */
+
 /* ENROLLMENT FORM */
+
+/* LOADING SUBJECTS */
+.enrol-input-fields table thead tr th {
+    font-size: 12px;
+    font-weight: 500;
+    color: #2e2e2e;
+}
+/* LOADING SUBJECTS */

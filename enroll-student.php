@@ -165,7 +165,9 @@ if (!isset($_SESSION['username'])) {
                 </div>
             </div>
             <div class="main-container-form">
-                <form action="" class="enrollForm" id="enrollForm">
+
+                        
+                <form action="" class="enrollForm" id="enrollForm" style="display: none;">
                     <div class="enroll-form first">
                         <div class="personal-details personal">
                             <span class="title">Grade Level Course:</span>
@@ -501,7 +503,7 @@ if (!isset($_SESSION['username'])) {
 
                                 <div class="enroll-input-fields">
                                     <label for="course">Course</label>
-                                    <input type="text" id="course" disabled>
+                                    <input type="text" id="course" placeholder="BSIT / BSBA / BSHM / BSTM" disabled>
                                 </div>
 
                                 <div class="enroll-input-fields">
@@ -782,50 +784,278 @@ if (!isset($_SESSION['username'])) {
     </script>
     <!-- MODAL FOR PRIVACY POLICY -->
 
+    <style>
+        /* Default input styles */
+        .subject-code,
+        .description,
+        .days,
+        .time,
+        .room-no,
+        .units {
+            height: 30px;
+            border-radius: 3px;
+            border: 1px solid #aaa;
+            padding: 0 15px;
+            font-size: 11px;
+            outline: none;
+        }
+
+        /* Specific widths for each column */
+        .subject-code {
+            width: 100px;
+        }
+
+        .description {
+            width: 600px;
+        }
+
+        .days {
+            width: 100px;
+        }
+
+        .time {
+            width: 140px;
+        }
+
+        .room-no {
+            width: 80px;
+        }
+
+        .units {
+            width: 80px;
+        }
+
+        /* Media query for laptop screens (1024px to 1366px) */
+        @media (min-width: 1024px) and (max-width: 1366px) {
+            .subject-code {
+                width: 100px;
+                /* Resize subject code for laptops */
+            }
+
+            .description {
+                width: 300px;
+                /* Reduce description width for laptops */
+            }
+
+            .days {
+                width: 100px;
+                /* Resize days for laptops */
+            }
+
+            .time {
+                width: 140px;
+                /* Resize time for laptops */
+            }
+
+            .room-no {
+                width: 80px;
+                /* Resize room number for laptops */
+            }
+
+            .units {
+                width: 100px;
+                /* Resize units for laptops */
+            }
+        }
+
+        /* Media query for smaller screens (max-width: 768px) */
+        @media (max-width: 768px) {
+            .subject-code {
+                width: 80px;
+                /* Resize subject code */
+            }
+
+            .description {
+                width: 100%;
+                /* Make description take full width */
+            }
+
+            .days {
+                width: 80px;
+                /* Resize days */
+            }
+
+            .time {
+                width: 120px;
+                /* Resize time */
+            }
+
+            .room-no {
+                width: 100px;
+                /* Resize room number */
+            }
+
+            .units {
+                width: 100px;
+                /* Resize units */
+            }
+        }
+
+        /* Media query for very small screens (max-width: 480px) */
+        @media (max-width: 480px) {
+            .subject-code {
+                width: 70px;
+                /* Resize subject code further */
+            }
+
+            .description {
+                width: 100%;
+                /* Full width for description */
+            }
+
+            .days {
+                width: 70px;
+                /* Resize days further */
+            }
+
+            .time {
+                width: 100px;
+                /* Resize time further */
+            }
+
+            .room-no {
+                width: 70px;
+                /* Resize room number */
+            }
+
+            .units {
+                width: 70px;
+                /* Resize units */
+            }
+        }
+    </style>
+
+
     <script>
+        // Predefined data for subjects
+        const subjectData = {
+            "CS101": {
+                description: "Introduction to Computer Science",
+                days: "Mon-Wed-Fri",
+                time: "9:00 AM - 10:30 AM",
+                room_no: "101",
+                units: "3"
+            },
+            "MATH201": {
+                description: "Calculus I",
+                days: "Tue-Thu",
+                time: "10:00 AM - 11:30 AM",
+                room_no: "102",
+                units: "4"
+            },
+            "PHY301": {
+                description: "Physics I",
+                days: "Mon-Wed",
+                time: "2:00 PM - 3:30 PM",
+                room_no: "103",
+                units: "3"
+            },
+            "ENG101": {
+                description: "English Composition",
+                days: "Mon-Wed-Fri",
+                time: "8:00 AM - 9:00 AM",
+                room_no: "104",
+                units: "3"
+            },
+            "HIST202": {
+                description: "World History",
+                days: "Tue-Thu",
+                time: "11:00 AM - 12:30 PM",
+                room_no: "105",
+                units: "3"
+            },
+            "CHEM101": {
+                description: "General Chemistry",
+                days: "Mon-Wed",
+                time: "1:00 PM - 2:30 PM",
+                room_no: "106",
+                units: "4"
+            },
+            "BIO201": {
+                description: "Biology II",
+                days: "Tue-Thu",
+                time: "3:00 PM - 4:30 PM",
+                room_no: "107",
+                units: "3"
+            },
+            "ECON101": {
+                description: "Principles of Economics",
+                days: "Mon-Wed-Fri",
+                time: "10:30 AM - 11:30 AM",
+                room_no: "108",
+                units: "3"
+            },
+            "PSYCH101": {
+                description: "Introduction to Psychology",
+                days: "Tue-Thu",
+                time: "9:00 AM - 10:30 AM",
+                room_no: "109",
+                units: "3"
+            },
+            "ART101": {
+                description: "Fundamentals of Art",
+                days: "Mon-Wed",
+                time: "2:30 PM - 4:00 PM",
+                room_no: "110",
+                units: "2"
+            },
+            "PHIL201": {
+                description: "Philosophy and Ethics",
+                days: "Tue-Thu",
+                time: "1:00 PM - 2:30 PM",
+                room_no: "111",
+                units: "3"
+            },
+            "STAT101": {
+                description: "Introduction to Statistics",
+                days: "Mon-Wed-Fri",
+                time: "3:30 PM - 4:30 PM",
+                room_no: "112",
+                units: "3"
+            },
+            "BUS101": {
+                description: "Introduction to Business",
+                days: "Tue-Thu",
+                time: "11:30 AM - 1:00 PM",
+                room_no: "113",
+                units: "3"
+            }
+        };
+
+
         // Function to add a new row to the table
         function addRow(term) {
             const table = document.querySelector(`table.${term} tbody`);
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
-        <td><input type="text" style="width: 100px; height: 30px; border-radius: 3px; border: none; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="${term}[][subject_code]"></td>
-        <td><input type="text" style="width: 600px; height: 30px; border-radius: 3px; border: none; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="${term}[][description]"></td>
-        <td><input type="text" style="width: 100px; height: 30px; border-radius: 3px; border: none; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="${term}[][days]"></td>
-        <td><input type="text" class="timeRange" placeholder="e.g., 5:00 PM - 6:00 PM" style="width: 140px; height: 30px; border-radius: 3px; border: none; border: 1px solid #aaa; outline: none; padding: 0 15px; font-size: 11px;" name="${term}[][time]" required></td>
-        <td><input type="text" style="width: 80px; height: 30px; border-radius: 3px; border: none; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="${term}[][room_no]"></td>
-        <td><input type="text" style="width: 80px; height: 30px; border-radius: 3px; border: none; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="${term}[][units]"></td>
-    `;
+                    <td><input type="text" class="subject-code" placeholder="Enter Subject Code" name="${term}[][subject_code]"></td>
+                    <td><input type="text" class="description" readonly name="${term}[][description]"></td>
+                    <td><input type="text" class="days" readonly name="${term}[][days]"></td>
+                    <td><input type="text" class="time" readonly name="${term}[][time]"></td>
+                    <td><input type="text" class="room-no" readonly name="${term}[][room_no]"></td>
+                    <td><input type="text" class="units" readonly name="${term}[][units]"></td>
+                `;
             table.appendChild(newRow);
 
-            // Add event listener to the new timeRange input field
-            const newTimeRangeInput = newRow.querySelector('.timeRange');
-            newTimeRangeInput.addEventListener('input', function() {
-                const timeRange = newTimeRangeInput.value.trim();
+            // Add event listener for dynamic filling
+            const subjectCodeInput = newRow.querySelector('.subject-code');
+            subjectCodeInput.addEventListener('input', function() {
+                const subjectCode = subjectCodeInput.value.trim().toUpperCase();
+                const subjectInfo = subjectData[subjectCode];
 
-                // Regular expression to match time range format
-                const regex = /^([01]?[0-9]|2[0-3]):([0-5][0-9]) ([APap][Mm])\s*-\s*([01]?[0-9]|2[0-3]):([0-5][0-9]) ([APap][Mm])$/;
-
-                if (!regex.test(timeRange)) {
-                    // Alert if the format is incorrect
-                    newTimeRangeInput.style.borderColor = 'red'; // Add red border to input
+                if (subjectInfo) {
+                    newRow.querySelector('.description').value = subjectInfo.description;
+                    newRow.querySelector('.days').value = subjectInfo.days;
+                    newRow.querySelector('.time').value = subjectInfo.time;
+                    newRow.querySelector('.room-no').value = subjectInfo.room_no;
+                    newRow.querySelector('.units').value = subjectInfo.units;
                 } else {
-                    // Remove the alert if the format is correct
-                    newTimeRangeInput.style.borderColor = ''; // Remove red border
-                }
-
-                // Optional: Additional validation to ensure start time is before end time
-                const [startTime, , endTime] = timeRange.split(' - ');
-                if (startTime && endTime) {
-                    const [startHour, startMinute, startPeriod] = startTime.split(/[: ]/);
-                    const [endHour, endMinute, endPeriod] = endTime.split(/[: ]/);
-
-                    let startTotalMinutes = (parseInt(startHour) % 12 + (startPeriod.toUpperCase() === 'PM' , 'AM' ? 12 : 0)) * 60 + parseInt(startMinute);
-                    let endTotalMinutes = (parseInt(endHour) % 12 + (endPeriod.toUpperCase() === 'PM' , 'AM' ? 12 : 0)) * 60 + parseInt(endMinute);
-
-                    if (startTotalMinutes >= endTotalMinutes) {
-                        alert("End time must be after the start time.");
-                        newTimeRangeInput.style.borderColor = 'red'; // Add red border
-                    }
+                    // Clear fields if subject code is invalid
+                    newRow.querySelector('.description').value = 'NO VALUE';
+                    newRow.querySelector('.days').value = 'NO VALUE';
+                    newRow.querySelector('.time').value = 'NO VALUE';
+                    newRow.querySelector('.room-no').value = 'NO VALUE';
+                    newRow.querySelector('.units').value = 'NO VALUE';
                 }
             });
         }
@@ -937,7 +1167,6 @@ if (!isset($_SESSION['username'])) {
             }
         }
 
-        // Validate Enrollment Form before proceeding
         function validateEnrollForm() {
             const firstName = document.getElementById('firstName').value;
             const lastName = document.getElementById('lastName').value;
@@ -945,13 +1174,12 @@ if (!isset($_SESSION['username'])) {
             const phone = document.getElementById('phone').value;
             const password = document.getElementById('password').value;
 
-            // Check if all fields are filled out
             if (firstName && lastName && email && phone && password) {
-                // If valid, move to the next form
+
                 showForm('loadingSubjectForm');
-                return false; // Prevent form submission
+                return false; 
             } else {
-                // If not valid, alert user
+
                 alert("Please fill in all the fields.");
                 return false;
             }
