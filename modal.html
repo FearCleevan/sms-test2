@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="modal.css">
+</head>
+
+<body>
+    <div class="navbar-content">
+        <div class="navbar-left">
+            <img src="./image/Headpiece-min.png" alt="University Logo" class="navbar-logo">
+        </div>
+
+        <div class="navbar-right">
+            <div class="navbar-icons">
+                <i class="fa-solid fa-user" id="profileTrigger"></i>
+            </div>
+            <div class="navbar-message">
+                <i class="fa-regular fa-envelope"></i>
+                <span>Message Us</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="dropdown-modal" id="dropdownModal">
+        <div class="profile-card">
+            <img src="./uploads/373399575_674945377889667_4564130696322470655_n.jpg" alt="Profile Picture" class="profile-pic">
+            <p class="student-id">SPC24-0001</p>
+            <h2 class="student-name">PETER PAUL ABILLAR LAZAM</h2>
+            <p class="student-course">Bachelor of Science in Information Technology</p>
+            <button class="profile-btn">Profile</button>
+
+            <!-- Settings Section -->
+            <div class="settings">
+                <div class="setting-item">
+                    <span>Dark Mode</span>
+                    <label class="switch">
+                        <input title="checkbox" type="checkbox" id="darkModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="setting-item">
+                    <i class="fa-solid fa-key"></i>
+                    <span>Change Password</span>
+                </div>
+                <div class="setting-item logout">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dropdown Modal Toggle
+        const profileTrigger = document.getElementById("profileTrigger");
+        const dropdownModal = document.getElementById("dropdownModal");
+
+        profileTrigger.addEventListener("click", () => {
+            dropdownModal.style.display =
+                dropdownModal.style.display === "block" ? "none" : "block";
+        });
+
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById("darkModeToggle");
+
+        darkModeToggle.addEventListener("change", () => {
+            if (darkModeToggle.checked) {
+                document.body.style.backgroundColor = "#333";
+            } else {
+                document.body.style.backgroundColor = "#fff";
+            }
+        });
+
+        // Close Dropdown when clicking outside
+        window.addEventListener("click", (event) => {
+            if (!profileTrigger.contains(event.target) && !dropdownModal.contains(event.target)) {
+                dropdownModal.style.display = "none";
+            }
+        });
+
+    </script>
+
+    <header class="header">
+
+        <div class="school-calendar-header">
+            <img src="./image/apple-touch-icon.png" alt="College Logo" class="college-logo">
+            <h1 class="college-name">SAMSON POLYTECHNIC COLLEGE of DAVAO</h1>
+            <p class="college-address">(Formerly Samson Technical Institute)</p>
+            <p class="college-address">R. Magsaysay Avenue, 8000 Davao City</p>
+            <p class="college-address">Tel. No. (082) 227-2392</p>
+        </div>
+    </header>
+    <div class="profile-containers">
+        <div class="profile-image">
+            <img src="./uploads/373399575_674945377889667_4564130696322470655_n.jpg" alt="Profile Image">
+        </div>
+        <div class="profile-details">
+            <h1>SPC24-0001</h1>
+            <p>jonathan.mauring17@gmail.com</p>
+            <h2>PETER PAUL ABILLAR LAZAM</h2>
+            <p>Bachelor of Science in Information Technology</p>
+        </div>
+    </div>
+    <div class="tabs">
+        <div class="tabs-content">
+            <div class="tab active" data-tab="profile">Profile</div>
+            <div class="tab" data-tab="grades">Subjects and Program</div>
+            <div class="tab" data-tab="program-eval">Grading History</div>
+            <div class="tab" data-tab="statistics">Statistics</div>
+            <div class="tab" data-tab="enrollment">Enrollment History</div>
+            <div class="tab" data-tab="accountabilities">Accountabilities</div>
+            <div class="tab" data-tab="services-eval">University Services</div>
+        </div>
+    </div>
+
+    <div id="profile" class="tab-content active">
+        <div class="program-evaluation-container">
+            <h2 class="grades-title">Student Profile</h2>
+            <div class="profile-container">
+                <!-- Left Section -->
+                <div class="profile-section-left">
+                    <h3>Personal Information</h3>
+                    <p><strong>Name:</strong> Peter Paul Abillar Lazan</p>
+                    <p><strong>Address:</strong> Matina Aplaya, Davao City</p>
+                    <p><strong>Email:</strong> jonathan.mauring17@gmail.com</p>
+                    <p><strong>Phone:</strong> 0951-537-9127</p>
+                </div>
+
+                <!-- Right Section -->
+                <div class="profile-section-right">
+                    <h3>Academic Information</h3>
+                    <p><strong>Course:</strong> BSIT</p>
+                    <p><strong>Year Level:</strong> 4th Year</p>
+                    <p><strong>Semester:</strong> 1st Semester</p>
+                    <p><strong>Status:</strong> Active</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="grades" class="tab-content">
+        <div class="program-evaluation-container">
+            <h2 class="grades-title">Subjects and Program</h2>
+            <div class="grades-header">
+                <select title="semester" class="semester-select">
+                    <option value="2024-2025 1st Semester">2024-2025 1st Semester</option>
+                    <option value="2024-2025 2nd Semester">2024-2025 2nd Semester</option>
+                    <option value="2023-2024 1st Semester">2023-2024 1st Semester</option>
+                </select>
+                <button class="refresh-button">Refresh</button>
+                <button class="download-button">Downloaded</button>
+            </div>
+            <table class="grades-table">
+                <thead>
+                    <tr>
+                        <th>CODE</th>
+                        <th>TITLE</th>
+                        <th>UNIT</th>
+                        <th>FINAL</th>
+                        <th>RE EXAM</th>
+                        <th>REMARKS</th>
+                        <th>POSTED ON</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>BES 115</td>
+                        <td>Mechanics of Rigid Bodies</td>
+                        <td>5</td>
+                        <td></td>
+                        <td></td>
+                        <td>ENROLLED</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>PE 213</td>
+                        <td>Physical Activities Towards Health & Fitness 1</td>
+                        <td>2</td>
+                        <td></td>
+                        <td></td>
+                        <td>ENROLLED</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>GE 216</td>
+                        <td>Readings in Philippine History</td>
+                        <td>3</td>
+                        <td></td>
+                        <td></td>
+                        <td>ENROLLED</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>GE 215</td>
+                        <td>The Life and Works of Rizal</td>
+                        <td>3</td>
+                        <td></td>
+                        <td></td>
+                        <td>ENROLLED</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>ME 212L</td>
+                        <td>Workshop Theory and Practice</td>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
+                        <td>ENROLLED</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="program-eval" class="tab-content">
+        <div class="program-evaluation-container">
+            <h2 class="grades-title">Grading History</h2>
+            <!-- Dropdown and PDF Download Button -->
+            <div class="grades-header">
+                <select title="semester" id="filterDropdown" class="semester-select">
+                    <option value="all">Show All</option>
+                    <option value="1st Year - 1st Semester">1st Year - 1st Semester</option>
+                    <option value="1st Year - 2nd Semester">1st Year - 2nd Semester</option>
+                    <option value="2nd Year - 1st Semester">2nd Year - 1st Semester</option>
+                    <option value="2nd Year - 2nd Semester">2nd Year - 2nd Semester</option>
+                    <option value="3rd Year - 1st Semester">3rd Year - 1st Semester</option>
+                    <option value="3rd Year - 2nd Semester">3rd Year - 2nd Semester</option>
+                    <option value="4th Year - 1st Semester">4th Year - 1st Semester</option>
+                    <option value="4th Year - 2nd Semester">4th Year - 2nd Semester</option>
+                </select>
+                <button id="downloadPDF" class="download-button">Download PDF</button>
+            </div>
+
+            <!-- Table -->
+            <div class="table-wrapper">
+                <table class="program-evaluation-table" id="evaluationTable">
+                    <thead>
+                        <tr>
+                            <th>YEAR / TERM</th>
+                            <th>CODE</th>
+                            <th>TITLE</th>
+                            <th>CREDIT UNITS</th>
+                            <th>FINAL</th>
+                            <th>RE EXAM</th>
+                            <th>REMARKS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1st Year - 1st Semester</td>
+                            <td>GE 111</td>
+                            <td>Purposive Communication</td>
+                            <td>3</td>
+                            <td>1.75</td>
+                            <td></td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>1st Year - 2nd Semester</td>
+                            <td>GE 112</td>
+                            <td>Mathematics in the Modern World</td>
+                            <td>3</td>
+                            <td>2.00</td>
+                            <td></td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>2nd Year - 1st Semester</td>
+                            <td>GE 113</td>
+                            <td>Understanding the Self</td>
+                            <td>3</td>
+                            <td>1.75</td>
+                            <td></td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>2nd Year - 1st Semester</td>
+                            <td>GE 113</td>
+                            <td>Understanding the Self</td>
+                            <td>3</td>
+                            <td>1.75</td>
+                            <td></td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>2nd Year - 1st Semester</td>
+                            <td>GE 113</td>
+                            <td>Understanding the Self</td>
+                            <td>3</td>
+                            <td>1.75</td>
+                            <td></td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>2nd Year - 1st Semester</td>
+                            <td>GE 113</td>
+                            <td>Understanding the Self</td>
+                            <td>3</td>
+                            <td>1.75</td>
+                            <td></td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>2nd Year - 1st Semester</td>
+                            <td>GE 113</td>
+                            <td>Understanding the Self</td>
+                            <td>3</td>
+                            <td>1.75</td>
+                            <td></td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>2nd Year - 1st Semester</td>
+                            <td>GE 113</td>
+                            <td>Understanding the Self</td>
+                            <td>3</td>
+                            <td>1.75</td>
+                            <td></td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>2nd Year - 1st Semester</td>
+                            <td>GE 113</td>
+                            <td>Understanding the Self</td>
+                            <td>3</td>
+                            <td>1.75</td>
+                            <td></td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>2nd Year - 1st Semester</td>
+                            <td>GE 113</td>
+                            <td>Understanding the Self</td>
+                            <td>3</td>
+                            <td>1.75</td>
+                            <td></td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>2nd Year - 1st Semester</td>
+                            <td>GE 113</td>
+                            <td>Understanding the Self</td>
+                            <td>3</td>
+                            <td>1.75</td>
+                            <td></td>
+                            <td>PASSED</td>
+                        </tr>
+                        <tr>
+                            <td>2nd Year - 1st Semester</td>
+                            <td>GE 113</td>
+                            <td>Understanding the Self</td>
+                            <td>3</td>
+                            <td>1.75</td>
+                            <td></td>
+                            <td>PASSED</td>
+                        </tr>
+                        <!-- Add more rows as needed -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- <div id="statistics" class="tab-content">Statistics Overview.</div>
+    <div id="enrollment" class="tab-content">Enrollment Information.</div>
+    <div id="accountabilities" class="tab-content">Accountabilities Overview.</div>
+    <div id="services-eval" class="tab-content">University Services Evaluation.</div> -->
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo-container">
+                <div class="line"></div>
+                <img src="./image/apple-touch-icon.png" alt="Samson Logo" class="footer-logo">
+                <div class="lines"></div>
+                <img src="./image/apple-touch-icon.png" alt="Samson Logo" class="footer-logo">
+                <div class="liness"></div>
+            </div>
+            <div class="footer-text">
+                <p>Samson Polytechnic College of Davao • Systems and Data Management Division</p>
+                <p>Copyright © 2024. All Rights Reserved. | <a href="#">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script>
+        // Select all tab buttons and content sections
+        const tabs = document.querySelectorAll(".tab");
+        const tabContents = document.querySelectorAll(".tab-content");
+
+        // Function to activate the tab and its corresponding content
+        function activateTab(tab) {
+            // Remove 'active' class from all tabs and tab contents
+            tabs.forEach((t) => t.classList.remove("active"));
+            tabContents.forEach((content) => content.classList.remove("active"));
+
+            // Add 'active' class to the clicked tab and its corresponding content
+            tab.classList.add("active");
+            const target = document.getElementById(tab.dataset.tab);
+            target.classList.add("active");
+
+            // Scroll to the section of the active tab
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        // Set initial active tab and content
+        const activeTab = document.querySelector(".tab.active");
+        if (activeTab) {
+            activateTab(activeTab); // Activate the default tab and scroll to it
+        }
+
+        // Add click event listener to each tab
+        tabs.forEach((tab) => {
+            tab.addEventListener("click", () => {
+                activateTab(tab);
+            });
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const filterDropdown = document.getElementById("filterDropdown");
+            const table = document.getElementById("evaluationTable");
+            const downloadPDF = document.getElementById("downloadPDF");
+
+            // Filter table rows
+            filterDropdown.addEventListener("change", (e) => {
+                const filterValue = e.target.value.toLowerCase();
+                const rows = table.querySelectorAll("tbody tr");
+
+                rows.forEach((row) => {
+                    const yearTerm = row.querySelector("td").innerText.toLowerCase();
+                    if (filterValue === "all" || yearTerm.includes(filterValue)) {
+                        row.style.display = "";
+                    } else {
+                        row.style.display = "none";
+                    }
+                });
+            });
+
+            // Generate PDF
+            downloadPDF.addEventListener("click", () => {
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF();
+
+                pdf.text("Academic Program Evaluation", 10, 10);
+
+                // Extract table rows
+                const rows = Array.from(table.querySelectorAll("tbody tr")).filter(
+                    (row) => row.style.display !== "none"
+                );
+
+                const data = rows.map((row) => {
+                    return Array.from(row.querySelectorAll("td")).map((cell) => cell.innerText);
+                });
+
+                pdf.autoTable({
+                    head: [["YEAR / TERM", "CODE", "TITLE", "CREDIT UNITS", "FINAL", "RE EXAM", "REMARKS"]],
+                    body: data,
+                });
+
+                pdf.save("program-evaluation.pdf");
+            });
+        });
+
+    </script>
+
+    <script>
+        // Add scroll behavior if tabs overflow
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelector('.tabs');
+            const tabsContent = document.querySelector('.tabs-content');
+
+            // Check if the tabs are overflowing
+            const checkOverflow = () => {
+                if (tabsContent.scrollWidth > tabs.offsetWidth) {
+                    tabs.style.overflowX = 'auto';
+                } else {
+                    tabs.style.overflowX = 'hidden';
+                }
+            };
+
+            // Check on window resize
+            window.addEventListener('resize', checkOverflow);
+
+            // Initial check
+            checkOverflow();
+        });
+
+    </script>
+
+
+</body>
+
+</html>

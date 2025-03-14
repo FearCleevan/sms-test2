@@ -23,7 +23,7 @@ if (isset($_POST['login'])) {
         }
 
         // Redirect to dashboard after successful login
-        header("Location: admin-dashboard.php");
+        header("Location: dashboard.php");
         exit();
     } else {
         // Store error message in session if login fails

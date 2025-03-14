@@ -212,7 +212,7 @@ form button i {
     align-items: center;
     justify-content: center;
     background-color: #f0f0f0;
-    border: 1       px solid #ddd;
+    border: 4px solid #ddd;
     margin: 0 auto 10px;
 }
 
@@ -224,7 +224,7 @@ form button i {
 }
 
 /* Upload button styling */
-.upload-label {
+.upload-label span {
     display: inline-block;
     cursor: pointer;
     padding: 5px 20px;
@@ -238,7 +238,7 @@ form button i {
     transition: opacity 0.3s;
 }
 
-.upload-label:hover {
+.upload-label span:hover {
     opacity: 0.7;
 }
 
