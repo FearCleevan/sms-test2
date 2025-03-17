@@ -25,6 +25,7 @@ $pageTitle = "Admin Dashboard - Samson Management System"; // You can modify thi
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Management System Dashboard</title>
+    <link rel="icon" type="image/png" href="./image/apple-touch-icon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -272,8 +273,6 @@ $pageTitle = "Admin Dashboard - Samson Management System"; // You can modify thi
             background-color: #f4f4f4;
             color: #007bff;
         }
-
-
 
         /* HEADER MENU */
 
@@ -889,9 +888,9 @@ $pageTitle = "Admin Dashboard - Samson Management System"; // You can modify thi
     <div class="sidebar">
         <h2>Dashboard</h2>
         <ul>
-            <li><a href="#dashboard" data-title="Dashboard" class="active"><i class="fa-solid fa-house"></i>
+            <li><a href="./dashboard.php" data-title="Dashboard" class="active"><i class="fa-solid fa-house"></i>
                     <span>Dashboard</span></a></li>
-            <li><a href="./enroll-student.php" data-title="Enroll a Student"><i class="fa-solid fa-user-plus"></i>
+            <li><a href="./sample-details.php" data-title="Enroll a Student"><i class="fa-solid fa-user-plus"></i>
                     <span>Enroll a Student</span></a></li>
             <li><a href="./department.php" data-title="Department"><i class="fa-solid fa-building"></i>
                     <span>Department</span></a></li>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Subject Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-size: 12px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            border-bottom: 2px solid #000;
+        }
+
+        header img {
+            height: 60px;
+        }
+
+        header .school-info {
+            text-align: right;
+        }
+
+        header .school-info h1 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        header .school-info p {
+            margin: 0;
+            font-size: 12px;
+        }
+
+        .form-container {
+            padding: 20px;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-container .form-detail {
+            margin-bottom: 20px;
+        }
+
+        .form-container .form-detail p {
+            margin: 5px 0;
+        }
+
+        .form-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .form-container table,
+        .form-container th,
+        .form-container td {
+            border: 1px solid #000;
+        }
+
+        .form-container th,
+        .form-container td {
+            padding: 6px;
+            text-align: left;
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            border-top: 2px solid #000;
+            margin-top: 20px;
+        }
+
+        footer .signature-box {
+            width: 23%;
+            text-align: center;
+        }
+
+        footer .signature-box p {
+            margin: 5px 0;
+        }
+
+        .duplicated {
+            border-top: 2px dashed #000;
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+
+        .print-button-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .print-button-container button {
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+
+        @media print {
+            .print-button-container {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <img src="./uploads/Samson-Logo.png" alt="School Logo">
+        <div class="school-info">
+            <h1>Samson Polytechnic College of Davao</h1>
+            <p>Magsaysay Avenue corner Chavez Street, Davao City</p>
+        </div>
+    </header>
+    <div class="form-container">
+        <h2>Enrollment Form</h2>
+        <div class="form-detail">
+            <p>Date of Submission: <span id="submission-date"></span></p>
+            <p>Student ID: SPC25-0031</p>
+            <p>Full Name: Peter Paul Lazan</p>
+            <p>Course: BSIT</p>
+            <p>Year: 1st Year</p>
+            <p>Semester: 1st Semester</p>
+            <p>Status: Enrolled</p>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Subject Code</th>
+                    <th>Description</th>
+                    <th>Lec</th>
+                    <th>Lab</th>
+                    <th>Units</th>
+                    <th>Prerequisites</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>GE 5</td>
+                    <td>READING IN PHILIPPINE HISTORY</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>NONE</td>
+                </tr>
+                <tr>
+                    <td>GE 5</td>
+                    <td>READING IN PHILIPPINE HISTORY</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>NONE</td>
+                </tr>
+                <tr>
+                    <td>GE 5</td>
+                    <td>READING IN PHILIPPINE HISTORY</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>NONE</td>
+                </tr>
+                <tr>
+                    <td>GE 5</td>
+                    <td>READING IN PHILIPPINE HISTORY</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>NONE</td>
+                </tr>
+                <tr>
+                    <td>GE 5</td>
+                    <td>READING IN PHILIPPINE HISTORY</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>NONE</td>
+                </tr>
+                <tr>
+                    <td>GE 5</td>
+                    <td>READING IN PHILIPPINE HISTORY</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>NONE</td>
+                </tr>
+                <tr>
+                    <td>GE 5</td>
+                    <td>READING IN PHILIPPINE HISTORY</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>NONE</td>
+                </tr>
+                <tr>
+                    <td>GE 5</td>
+                    <td>READING IN PHILIPPINE HISTORY</td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>3</td>
+                    <td>NONE</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer>
+        <div class="signature-box">
+            <p>Confirmed By:</p>
+            <p>____________________</p>
+            <p>Date: _______________</p>
+        </div>
+        <div class="signature-box">
+            <p>Approved By:</p>
+            <p>____________________</p>
+            <p>Date: _______________</p>
+        </div>
+        <div class="signature-box">
+            <p>Assessed By:</p>
+            <p>____________________</p>
+            <p>Date: _______________</p>
+        </div>
+        <div class="signature-box">
+            <p>Copy Received By:</p>
+            <p>____________________</p>
+            <p>Date: _______________</p>
+        </div>
+    </footer>
+
+    <div class="duplicated">
+        <header>
+            <img src="./uploads/Samson-Logo.png" alt="School Logo">
+            <div class="school-info">
+                <h1>Samson Polytechnic College of Davao</h1>
+                <p>Magsaysay Avenue corner Chavez Street, Davao City</p>
+            </div>
+        </header>
+        <div class="form-container">
+            <h2>Enrollment Form</h2>
+            <div class="form-detail">
+                <p>Date of Submission: <span id="submission-date-duplicate"></span></p>
+                <p>Full Name: Peter Paul Lazan</p>
+                <p>Student ID: SPC25-0031</p>
+                <p>Course: BSIT</p>
+                <p>Year: 1st Year</p>
+                <p>Semester: 1st Semester</p>
+                <p>Status: Enrolled</p>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject Code</th>
+                        <th>Description</th>
+                        <th>Lec</th>
+                        <th>Lab</th>
+                        <th>Units</th>
+                        <th>Prerequisites</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GE 5</td>
+                        <td>READING IN PHILIPPINE HISTORY</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>3</td>
+                        <td>NONE</td>
+                    </tr>
+                    <tr>
+                        <td>GE 5</td>
+                        <td>READING IN PHILIPPINE HISTORY</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>3</td>
+                        <td>NONE</td>
+                    </tr>
+                    <tr>
+                        <td>GE 5</td>
+                        <td>READING IN PHILIPPINE HISTORY</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>3</td>
+                        <td>NONE</td>
+                    </tr>
+                    <tr>
+                        <td>GE 5</td>
+                        <td>READING IN PHILIPPINE HISTORY</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>3</td>
+                        <td>NONE</td>
+                    </tr>
+                    <tr>
+                        <td>GE 5</td>
+                        <td>READING IN PHILIPPINE HISTORY</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>3</td>
+                        <td>NONE</td>
+                    </tr>
+                    <tr>
+                        <td>GE 5</td>
+                        <td>READING IN PHILIPPINE HISTORY</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>3</td>
+                        <td>NONE</td>
+                    </tr>
+                    <tr>
+                        <td>GE 5</td>
+                        <td>READING IN PHILIPPINE HISTORY</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>3</td>
+                        <td>NONE</td>
+                    </tr>
+                    <tr>
+                        <td>GE 5</td>
+                        <td>READING IN PHILIPPINE HISTORY</td>
+                        <td>3</td>
+                        <td>0</td>
+                        <td>3</td>
+                        <td>NONE</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer>
+            <div class="signature-box">
+                <p>Confirmed By:</p>
+                <p>____________________</p>
+                <p>Date: _______________</p>
+            </div>
+            <div class="signature-box">
+                <p>Approved By:</p>
+                <p>____________________</p>
+                <p>Date: _______________</p>
+            </div>
+            <div class="signature-box">
+                <p>Assessed By:</p>
+                <p>____________________</p>
+                <p>Date: _______________</p>
+            </div>
+            <div class="signature-box">
+                <p>Copy Received By:</p>
+                <p>____________________</p>
+                <p>Date: _______________</p>
+            </div>
+        </footer>
+    </div>
+
+    <div class="print-button-container">
+        <button onclick="window.print()">Print</button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('submission-date').textContent = today;
+            document.getElementById('submission-date-duplicate').textContent = today;
+        });
+    </script>
+</body>
+
+</html>

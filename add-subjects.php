@@ -14,41 +14,28 @@ if (!isset($_SESSION['username'])) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Collect form data
-    $subject_id = $_POST['subject_id'];
-    $course = $_POST['course'];
-    $year_level = $_POST['year_level'];
-    $semester = $_POST['semester'];
-
-    // Decode the subjects from the JSON string
-    $subjects = json_decode($_POST['subjects']); // Decode JSON into an array
-
-    // Prepare a prepared statement to avoid SQL injection
-    $stmt = $conn->prepare("INSERT INTO student_subject (subject_id, course, semester, year_level, subjects) 
-                            VALUES (?, ?, ?, ?, ?)");
-
-    // Bind parameters
-    $subjects_json = json_encode($subjects); // Encode the subjects back into JSON for storage
-    $stmt->bind_param(
-        "sssss",
-        $subject_id,
-        $course,
-        $semester,
-        $year_level,
-        $subjects_json // Pass the encoded JSON as a variable
-    );
-
-    // Execute the query and provide feedback
-    if ($stmt->execute()) {
-        echo "<script>
-                alert('Student successfully added.');
-                window.location.href = 'add-subjects.php'; // Redirect back to add-subjects.php
-              </script>";
-    } else {
-        echo "<script>
-                alert('Error: " . $stmt->error . "');
-                window.location.href = 'add-subjects.php'; // Redirect back to add-subjects.php
-              </script>";
+    if (isset($_POST['find_subject'])) {
+        $subject_id = $_POST['subject_id'];
+        $stmt = $conn->prepare("SELECT * FROM student_subject WHERE subject_id = ?");
+        $stmt->bind_param("s", $subject_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $subjects = $result->fetch_all(MYSQLI_ASSOC);
+    } elseif (isset($_POST['update_subject'])) {
+        $subject_id = $_POST['subject_id'];
+        $subjects = json_decode($_POST['subjects'], true);
+        foreach ($subjects as $subject) {
+            $stmt = $conn->prepare("UPDATE student_subject SET course = ?, year_level = ?, semester = ?, subjects = ? WHERE subject_id = ?");
+            $stmt->bind_param("sssss", $subject['course'], $subject['year_level'], $subject['semester'], json_encode($subject['subjects']), $subject_id);
+            $stmt->execute();
+        }
+        echo "<script>alert('Subjects updated successfully.'); window.location.href = 'add-subjects.php';</script>";
+    } elseif (isset($_POST['delete_subject'])) {
+        $subject_id = $_POST['subject_id'];
+        $stmt = $conn->prepare("DELETE FROM student_subject WHERE subject_id = ?");
+        $stmt->bind_param("s", $subject_id);
+        $stmt->execute();
+        echo "<script>alert('Subject deleted successfully.'); window.location.href = 'add-subjects.php';</script>";
     }
 }
 ?>
@@ -75,10 +62,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <ul class="nav-list">
             <li><a href="./dashboard.php" data-title="Dashboard"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a></li>
-            <li><a href="./enroll-student.php" data-title="Enroll a Student"><i class="fa-solid fa-user-plus"></i> <span>Enroll a Student</span></a></li>
-            <li><a href="./test.php" data-title="Department"><i class="fa-solid fa-building"></i> <span>Department</span></a></li>
+            <li><a href="./sample-details.php" data-title="Enroll a Student"><i class="fa-solid fa-user-plus"></i> <span>Enroll a Student</span></a></li>
+            <li><a href="./department.php" data-title="Department"><i class="fa-solid fa-building"></i> <span>Department</span></a></li>
             <li><a href="#course" data-title="Course"><i class="fa-solid fa-book"></i> <span>Course</span></a></li>
-            <li><a href="#course" data-title="Subjects" class="active"><i class="fa-solid fa-book-open"></i> <span>Subjects</span></a></li>
+            <li><a href="./add-subjects.php" data-title="Subjects" class="active"><i class="fa-solid fa-book-open"></i> <span>Subjects</span></a></li>
             <li><a href="#payment-management" data-title="Payment Management"><i class="fa-solid fa-credit-card"></i> <span>Payment Management</span></a></li>
             <li><a href="#grading-system" data-title="Grading System"><i class="fa-solid fa-graduation-cap"></i> <span>Grading System</span></a></li>
             <li><a href="#student-attendance" data-title="Student Attendance"><i class="fa-solid fa-calendar-check"></i> <span>Student Attendance</span></a></li>
@@ -368,20 +355,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="enroll-fields">
                                 <div class="enroll-input-fields">
                                     <label>Search Subject ID:</label>
-                                    <input type="text" name="subject_id" style="height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" required>
+                                    <input type="text" id="subject_id" name="subject_id" style="height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" required>
 
-                                    <button id="editSubject" style="height: 35px; margin-left: 0; max-width: 300px; width: 100%; border: none; outline: none; color: white; border-radius: 5px; cursor: pointer; background-color: #4070f4; transition: opacity ease 0.3s;">
+                                    <button type="button" id="find_subject" style="height: 35px; margin-left: 0; max-width: 300px; width: 100%; border: none; outline: none; color: white; border-radius: 5px; cursor: pointer; background-color: #4070f4; transition: opacity ease 0.3s;">
                                         Find Subjects ID
                                     </button>
                                 </div>
-
                             </div>
 
-                            <span class="title">Subject Loading Details</span>
+                            <span class="title">Subject Loading Result:</span>
 
-                            <div class="enroll-fields">
-                                <div class="enrol-input-fields">
-                                    <table class="subjects">
+                            <div class="enroll-fields" id="subject-loading-result">
+                                <!-- Fetched subjects will be displayed here -->
+                            </div>
+
+                            <div class="enroll-fields" id="action-buttons" style="display: none;">
+                                <button type="button" id="cancel" style="height: 35px; margin-left: 0; max-width: 300px; width: 100%; border: none; outline: none; color: white; border-radius: 5px; cursor: pointer; background-color: #ff4d4f; transition: opacity ease 0.3s;">
+                                    Cancel
+                                </button>
+                                <button type="button" id="delete_subject" style="height: 35px; margin-left: 0; max-width: 300px; width: 100%; border: none; outline: none; color: white; border-radius: 5px; cursor: pointer; background-color: #ff4d4f; transition: opacity ease 0.3s;">
+                                    Delete Subject
+                                </button>
+                                <button type="button" id="update_subject" style="height: 35px; margin-left: 0; max-width: 300px; width: 100%; border: none; outline: none; color: white; border-radius: 5px; cursor: pointer; background-color: #4070f4; transition: opacity ease 0.3s;">
+                                    Update Subject
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <script>
+                    document.getElementById('find_subject').addEventListener('click', function() {
+                        const subjectId = document.getElementById('subject_id').value;
+
+                        if (!subjectId) {
+                            alert('Please enter a Subject ID.');
+                            return;
+                        }
+
+                        // Send AJAX request to fetch subjects
+                        const xhr = new XMLHttpRequest();
+                        xhr.open('POST', 'fetch_subjects.php', true);
+                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                        xhr.onload = function() {
+                            if (xhr.status === 200) {
+                                console.log(xhr.responseText); // Log the response for debugging
+                                const response = JSON.parse(xhr.responseText);
+
+                                if (response.success) {
+                                    const subjects = response.data;
+                                    console.log(subjects); // Log the fetched subjects for debugging
+                                    const subjectLoadingResult = document.getElementById('subject-loading-result');
+                                    const actionButtons = document.getElementById('action-buttons');
+
+                                    // Clear previous results
+                                    subjectLoadingResult.innerHTML = '';
+
+                                    // Display fetched subjects in a table
+                                    const table = document.createElement('table');
+                                    table.className = 'subjects';
+                                    table.innerHTML = `
                                         <thead>
                                             <tr>
                                                 <th>Subject Code</th>
@@ -394,98 +427,325 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- New rows will be added here -->
-                                        </tbody>
-                                    </table>
-
-                                    <style>
-                                        .enrol-input-fields .subjects {
-                                            border: 1px solid #ddd;
-                                            padding: 5px;
-                                            width: 100%;
-                                        }
-                                    </style>
-
-                                    <button type="button" style="margin: 20px 0 20px 0;"
-                                        onclick="addRow()">Add Another Row</button>
-                                </div>
-                            </div>
-
-                            <script>
-                                // Function to add a new row to the table
-                                function addRow() {
-                                    const table = document.querySelector("table.subjects tbody");
-                                    const newRow = document.createElement('tr');
-                                    newRow.innerHTML = `
-                                                    <td><input type="text" style="width: 120px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][subject_code]" placeholder="Subject Code"></td>
-                                                    <td><input type="text" style="width: 400px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][description]" placeholder="Description"></td>
-                                                    <td><input type="number" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][lec]" placeholder="Lec"></td>
-                                                    <td><input type="number" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][lab]" placeholder="Lab"></td>
-                                                    <td><input type="number" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][unit_no]" placeholder="Units"></td>
-                                                    <td><input type="text" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][pre_req]" placeholder="Pre Req"></td>
+                                            ${subjects.map((subject, index) => `
+                                                <tr data-index="${index}">
+                                                    <td><input type="text" style="width: 120px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][subject_code]" value="${subject.subject_code || ''}"></td>
+                                                    <td><input type="text" style="width: 400px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][description]" value="${subject.description || ''}"></td>
+                                                    <td><input type="number" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][lec]" value="${subject.lec || ''}"></td>
+                                                    <td><input type="number" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][lab]" value="${subject.lab || ''}"></td>
+                                                    <td><input type="number" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][unit_no]" value="${subject.unit_no || ''}"></td>
+                                                    <td><input type="text" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][pre_req]" value="${subject.pre_req || ''}"></td>
                                                     <td>
-                                                        <button 
-                                                            type="button" 
-                                                            style="margin: 0; padding: 10px; background: #ff4d4f; border: none; cursor: pointer; color: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; width: 50px; height: 30px;" 
-                                                            onclick="removeRow(this)" 
-                                                            title="Remove">
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
+                                                        <div class="action-buttons">
+                                                            <button 
+                                                                type="button" 
+                                                                style="margin: 0; padding: 10px; background: #ff4d4f; border: none; cursor: pointer; color: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; width: 50px; height: 30px;" 
+                                                                onclick="removeRow(this, '${subject.subject_code}')" 
+                                                                title="Remove">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                            <button 
+                                                                type="button" 
+                                                                style="margin: 5px 0; padding: 10px; background: #4CAF50; border: none; cursor: pointer; color: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; width: 50px; height: 30px;" 
+                                                                onclick="addRowAbove(this)" 
+                                                                title="Add Row Above">
+                                                                <i class="fa fa-arrow-up"></i>
+                                                            </button>
+                                                            <button 
+                                                                type="button" 
+                                                                style="margin: 5px 0; padding: 10px; background: #2196F3; border: none; cursor: pointer; color: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; width: 50px; height: 30px;" 
+                                                                onclick="addRowBelow(this)" 
+                                                                title="Add Row Below">
+                                                                <i class="fa fa-arrow-down"></i>
+                                                            </button>
+                                                        </div>
                                                     </td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    `;
 
-
-                                                `;
-                                    table.appendChild(newRow);
+                                    subjectLoadingResult.appendChild(table);
+                                    actionButtons.style.display = 'block'; // Show action buttons
+                                } else {
+                                    alert(response.message || 'No subjects found.');
                                 }
+                            } else {
+                                alert('Error fetching subjects. Please try again.');
+                            }
+                        };
+                        xhr.send(`subject_id=${subjectId}`);
+                    });
 
-                                // Function to remove a row
-                                function removeRow(button) {
-                                    const row = button.closest('tr');
-                                    row.remove();
+                    // Function to remove a row
+                    function removeRow(button, subjectCode) {
+                        if (confirm('Are you sure you want to delete this subject?')) {
+                            const row = button.closest('tr'); // Get the row to be deleted
+                            const subjectId = document.getElementById('subject_id').value;
+
+                            // Send AJAX request to delete the subject
+                            const xhr = new XMLHttpRequest();
+                            xhr.open('POST', 'delete_subject_row.php', true);
+                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr.onload = function() {
+                                if (xhr.status === 200) {
+                                    const response = JSON.parse(xhr.responseText);
+
+                                    if (response.success) {
+                                        row.remove(); // Remove the row from the table
+                                        alert('Subject deleted successfully.');
+                                    } else {
+                                        alert(response.message || 'Error deleting subject.');
+                                    }
+                                } else {
+                                    alert('Error deleting subject. Please try again.');
                                 }
+                            };
+                            xhr.send(`subject_id=${subjectId}&subject_code=${subjectCode}`);
+                        }
+                    }
 
-                                // Ensure the subjects are grouped properly into an array of objects when submitting
-                                document.querySelector('form').onsubmit = function() {
-                                    const subjects = [];
-                                    const rows = document.querySelectorAll('table.subjects tbody tr');
+                    // Function to add a row above a specific row
+                    function addRowAbove(button) {
+                        const row = button.closest('tr');
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                                        <td><input type="text" style="width: 120px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][subject_code]" placeholder="Subject Code"></td>
+                                        <td><input type="text" style="width: 400px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][description]" placeholder="Description"></td>
+                                        <td><input type="number" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][lec]" placeholder="Lec"></td>
+                                        <td><input type="number" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][lab]" placeholder="Lab"></td>
+                                        <td><input type="number" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][unit_no]" placeholder="Units"></td>
+                                        <td><input type="text" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][pre_req]" placeholder="Pre Req"></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button 
+                                                    type="button" 
+                                                    style="margin: 0; padding: 10px; background: #ff4d4f; border: none; cursor: pointer; color: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; width: 50px; height: 30px;" 
+                                                    onclick="removeRow(this, '')" 
+                                                    title="Remove">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                                <button 
+                                                    type="button" 
+                                                    style="margin: 5px 0; padding: 10px; background: #4CAF50; border: none; cursor: pointer; color: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; width: 50px; height: 30px;" 
+                                                    onclick="addRowAbove(this)" 
+                                                    title="Add Row Above">
+                                                    <i class="fa fa-arrow-up"></i>
+                                                </button>
+                                                <button 
+                                                    type="button" 
+                                                    style="margin: 5px 0; padding: 10px; background: #2196F3; border: none; cursor: pointer; color: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; width: 50px; height: 30px;" 
+                                                    onclick="addRowBelow(this)" 
+                                                    title="Add Row Below">
+                                                    <i class="fa fa-arrow-down"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    `;
+                        row.parentNode.insertBefore(newRow, row); // Insert the new row above the current row
+                    }
 
-                                    rows.forEach(row => {
-                                        const subject = {
-                                            subject_code: row.querySelector('input[name="subjects[][subject_code]"]').value,
-                                            description: row.querySelector('input[name="subjects[][description]"]').value,
-                                            lec: row.querySelector('input[name="subjects[][lec]"]').value,
-                                            lab: row.querySelector('input[name="subjects[][lab]"]').value,
-                                            unit_no: row.querySelector('input[name="subjects[][unit_no]"]').value,
-                                            pre_req: row.querySelector('input[name="subjects[][pre_req]"]').value
-                                        };
-                                        subjects.push(subject);
-                                    });
+                    // Function to add a row below a specific row
+                    function addRowBelow(button) {
+                        const row = button.closest('tr');
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                                        <td><input type="text" style="width: 120px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][subject_code]" placeholder="Subject Code"></td>
+                                        <td><input type="text" style="width: 400px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][description]" placeholder="Description"></td>
+                                        <td><input type="number" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][lec]" placeholder="Lec"></td>
+                                        <td><input type="number" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][lab]" placeholder="Lab"></td>
+                                        <td><input type="number" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][unit_no]" placeholder="Units"></td>
+                                        <td><input type="text" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][pre_req]" placeholder="Pre Req"></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button 
+                                                    type="button" 
+                                                    style="margin: 0; padding: 10px; background: #ff4d4f; border: none; cursor: pointer; color: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; width: 50px; height: 30px;" 
+                                                    onclick="removeRow(this, '')" 
+                                                    title="Remove">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                                <button 
+                                                    type="button" 
+                                                    style="margin: 5px 0; padding: 10px; background: #4CAF50; border: none; cursor: pointer; color: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; width: 50px; height: 30px;" 
+                                                    onclick="addRowAbove(this)" 
+                                                    title="Add Row Above">
+                                                    <i class="fa fa-arrow-up"></i>
+                                                </button>
+                                                <button 
+                                                    type="button" 
+                                                    style="margin: 5px 0; padding: 10px; background: #2196F3; border: none; cursor: pointer; color: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; width: 50px; height: 30px;" 
+                                                    onclick="addRowBelow(this)" 
+                                                    title="Add Row Below">
+                                                    <i class="fa fa-arrow-down"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    `;
+                        row.parentNode.insertBefore(newRow, row.nextSibling); // Insert the new row below the current row
+                    }
 
-                                    // Add the subjects array to the form as a hidden input before submitting
-                                    const hiddenInput = document.createElement('input');
-                                    hiddenInput.type = 'hidden';
-                                    hiddenInput.name = 'subjects';
-                                    hiddenInput.value = JSON.stringify(subjects); // Ensure it's correctly serialized
-                                    document.querySelector('form').appendChild(hiddenInput);
+                    // Function to add a row at the end of the table
+                    function addRowAtEnd() {
+                        const tbody = document.querySelector('#subject-loading-result tbody');
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                                        <td><input type="text" style="width: 120px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][subject_code]" placeholder="Subject Code"></td>
+                                        <td><input type="text" style="width: 400px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][description]" placeholder="Description"></td>
+                                        <td><input type="number" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][lec]" placeholder="Lec"></td>
+                                        <td><input type="number" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][lab]" placeholder="Lab"></td>
+                                        <td><input type="number" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][unit_no]" placeholder="Units"></td>
+                                        <td><input type="text" style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" name="subjects[][pre_req]" placeholder="Pre Req"></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button 
+                                                    type="button" 
+                                                    style="margin: 0; padding: 10px; background: #ff4d4f; border: none; cursor: pointer; color: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; width: 50px; height: 30px;" 
+                                                    onclick="removeRow(this, '')" 
+                                                    title="Remove">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                                <button 
+                                                    type="button" 
+                                                    style="margin: 5px 0; padding: 10px; background: #4CAF50; border: none; cursor: pointer; color: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; width: 50px; height: 30px;" 
+                                                    onclick="addRowAbove(this)" 
+                                                    title="Add Row Above">
+                                                    <i class="fa fa-arrow-up"></i>
+                                                </button>
+                                                <button 
+                                                    type="button" 
+                                                    style="margin: 5px 0; padding: 10px; background: #2196F3; border: none; cursor: pointer; color: white; border-radius: 4px; display: flex; align-items: center; justify-content: center; width: 50px; height: 30px;" 
+                                                    onclick="addRowBelow(this)" 
+                                                    title="Add Row Below">
+                                                    <i class="fa fa-arrow-down"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    `;
+                        tbody.appendChild(newRow); // Append the new row at the end of the table
+                    }
+
+                    // Function to remove a row
+                    function removeRow(button, subjectCode) {
+                        if (confirm('Are you sure you want to delete this subject?')) {
+                            const row = button.closest('tr'); // Get the row to be deleted
+                            const subjectId = document.getElementById('subject_id').value;
+
+                            // Send AJAX request to delete the subject
+                            const xhr = new XMLHttpRequest();
+                            xhr.open('POST', 'delete_subject_row.php', true);
+                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr.onload = function() {
+                                if (xhr.status === 200) {
+                                    const response = JSON.parse(xhr.responseText);
+
+                                    if (response.success) {
+                                        row.remove(); // Remove the row from the table
+                                        alert('Subject deleted successfully.');
+                                    } else {
+                                        alert(response.message || 'Error deleting subject.');
+                                    }
+                                } else {
+                                    alert('Error deleting subject. Please try again.');
                                 }
-                            </script>
+                            };
+                            xhr.send(`subject_id=${subjectId}&subject_code=${subjectCode}`);
+                        }
+                    }
 
-                            <div class="enroll-fields">
-                                <div class="confirmation">
-                                    <label for="confirmation">
-                                        We <strong>HEREBY CERTIFY</strong> that the above information is true and
-                                        correct to the best of our knowledge <a href="#" id="openModal">Privacy
-                                            Policy</a>.
-                                    </label>
-                                    <input title="confirmation" type="checkbox" id="confirmation">
-                                </div>
-                            </div>
+                    // Cancel button
+                    document.getElementById('cancel').addEventListener('click', function() {
+                        document.getElementById('subject-loading-result').innerHTML = ''; // Clear results
+                        document.getElementById('action-buttons').style.display = 'none'; // Hide buttons
+                    });
 
-                            <button type="submit">Submit</button>
+                    // Delete Subject button
+                    document.getElementById('delete_subject').addEventListener('click', function() {
+                        const subjectId = document.getElementById('subject_id').value;
 
-                        </div>
-                    </div>
-                </form>
+                        if (!subjectId) {
+                            alert('Please enter a Subject ID.');
+                            return;
+                        }
+
+                        if (confirm('Are you sure you want to delete this subject?')) {
+                            const xhr = new XMLHttpRequest();
+                            xhr.open('POST', 'delete_subject.php', true);
+                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr.onload = function() {
+                                if (xhr.status === 200) {
+                                    const response = JSON.parse(xhr.responseText);
+
+                                    if (response.success) {
+                                        alert('Subject deleted successfully.');
+                                        document.getElementById('subject-loading-result').innerHTML = ''; // Clear results
+                                        document.getElementById('action-buttons').style.display = 'none'; // Hide buttons
+                                    } else {
+                                        alert(response.message || 'Error deleting subject.');
+                                    }
+                                } else {
+                                    alert('Error deleting subject. Please try again.');
+                                }
+                            };
+                            xhr.send(`subject_id=${subjectId}`);
+                        }
+                    });
+
+                    // Update Subject button
+                    document.getElementById('update_subject').addEventListener('click', function() {
+                        // Show confirmation dialog
+                        if (confirm('Are you sure you want to update the subjects?')) {
+                            const subjectId = document.getElementById('subject_id').value;
+                            const subjects = [];
+
+                            // Collect updated subject data
+                            document.querySelectorAll('#subject-loading-result tbody tr').forEach(row => {
+                                const subject = {
+                                    subject_code: row.querySelector('input[name="subjects[][subject_code]"]').value,
+                                    description: row.querySelector('input[name="subjects[][description]"]').value,
+                                    lec: row.querySelector('input[name="subjects[][lec]"]').value,
+                                    lab: row.querySelector('input[name="subjects[][lab]"]').value,
+                                    unit_no: row.querySelector('input[name="subjects[][unit_no]"]').value,
+                                    pre_req: row.querySelector('input[name="subjects[][pre_req]"]').value,
+                                };
+                                subjects.push(subject);
+                            });
+
+                            // Send AJAX request to update subjects
+                            const xhr = new XMLHttpRequest();
+                            xhr.open('POST', 'update_subjects.php', true);
+                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                            xhr.onload = function() {
+                                if (xhr.status === 200) {
+                                    try {
+                                        const response = JSON.parse(xhr.responseText);
+
+                                        if (response.success) {
+                                            alert(response.message || 'Subjects updated successfully.');
+
+                                            // Refresh the page to return to the default state
+                                            window.location.href = 'add-subjects.php';
+                                        } else {
+                                            alert(response.message || 'Error updating subjects.');
+                                        }
+                                    } catch (e) {
+                                        console.error('Invalid JSON response:', xhr.responseText);
+                                        alert('An error occurred. Please check the console for details.');
+                                    }
+                                } else {
+                                    alert('Error updating subjects. Please try again.');
+                                }
+                            };
+                            xhr.onerror = function() {
+                                alert('An error occurred. Please check your network connection.');
+                            };
+                            xhr.send(`subject_id=${subjectId}&subjects=${JSON.stringify(subjects)}`);
+                        } else {
+                            // User clicked "Cancel" in the confirmation dialog
+                            alert('Update canceled.');
+                        }
+                    });
+                </script>
 
             </div>
         </div>
@@ -638,6 +898,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             to {
                 opacity: 1;
             }
+        }
+    </style>
+
+    <style>
+        /* Style for the action buttons container */
+        .action-buttons {
+            display: flex;
+            /* Align buttons horizontally */
+            gap: 5px;
+            /* Add space between buttons */
+            align-items: center;
+            /* Vertically center buttons */
+        }
+
+        /* Style for individual buttons */
+        .action-buttons button {
+            margin: 0;
+            /* Remove default margins */
+            /* Adjust padding for better spacing */
+            display: flex;
+            /* Center icons inside buttons */
+            align-items: center;
+            justify-content: center;
         }
     </style>
 

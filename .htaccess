@@ -1,2 +1,11 @@
 RewriteEngine On
+
+# Redirect root URL to admin-login.php
+RewriteCond %{REQUEST_URI} ^/$
+RewriteRule ^(.*)$ admin-login.php [L]
+
+# Existing rule
 RewriteRule ^Admin$ admin-dashboard.php [L]
+
+php_value upload_max_filesize 10M
+php_value post_max_size 12M

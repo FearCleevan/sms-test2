@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile Search</title>
+    <link rel="stylesheet" href="search.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Search Student Profile</h1>
+        <div class="search-section">
+            <label for="studentId">Enter Student ID:</label>
+            <input type="text" id="studentId" placeholder="Student ID">
+            <button onclick="displayStudentProfile()">Submit</button>
+        </div>
+
+        <div id="studentProfile" class="profile-section hidden">
+            <div class="left-section">
+                <div class="profile-image">
+                    <img src="./uploads/peter.jpg" alt="Student Profile">
+                </div>
+                <div class="dropdowns">
+                    <label for="course">Course</label>
+                    <select id="course" name="course">
+                        <option selected disabled>Enter course:</option>
+                        <option value="BSIT">BSIT</option>
+                        <option value="BSHM">BSHM</option>
+                        <option value="BSBA">BSBA</option>
+                        <option value="BSTM">BSTM</option>
+                        <option value="BTVTeD-AT">BTVTeD-AT</option>
+                        <option value="BTVTeD-HVACR TECH">BTVTeD-HVACR TECH</option>
+                        <option value="BTVTeD-FSM">BTVTeD-FSM</option>
+                        <option value="BTVTeD-ET">BTVTeD-ET</option>
+                    </select>
+
+                    <label for="year_level">Year Level</label>
+                    <select id="year_level" name="year_level">
+                        <option selected disabled>Enter year:</option>
+                        <option value="1stYear">1st Year</option>
+                        <option value="2ndYear">2nd Year</option>
+                        <option value="3rdYear">3rd Year</option>
+                        <option value="4thYear">4th Year</option>
+                    </select>
+
+                    <label for="semester">Semester</label>
+                    <select id="semester" name="semester">
+                        <option selected disabled>Enter sem:</option>
+                        <option value="1stSem">1st Semester</option>
+                        <option value="2ndSem">2nd Semester</option>
+                        <option value="Summer">Summer</option>
+                    </select>
+                </div>
+                <button class="submit-button">Submit</button>
+            </div>
+
+            <div class="right-section">
+                <h2>Student Details</h2>
+                <p><strong>Student ID:</strong> <span id="displayStudentId">12345</span></p>
+                <p><strong>First Name:</strong> <span id="displayFirstName">John</span></p>
+                <p><strong>Middle Name:</strong> <span id="displayMiddleName">Doe</span></p>
+                <p><strong>Last Name:</strong> <span id="displayLastName">Smith</span></p>
+                <p><strong>Email:</strong> <span id="displayEmail">john.doe@example.com</span></p>
+                <p><strong>Phone:</strong> <span id="displayPhone">123-456-7890</span></p>
+                <p><strong>Address:</strong> <span id="displayAddress">123 Main St, City, Country</span></p>
+                <p><strong>Province:</strong> <span id="displayProvince">Province Name</span></p>
+                <div class="buttons">
+                    <button>Load Subjects</button>
+                    <button>Enroll Student</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function displayStudentProfile() {
+            // Simulate fetching student data (static data)
+            const studentProfile = {
+                studentId: "12345",
+                firstName: "John",
+                middleName: "Doe",
+                lastName: "Smith",
+                email: "john.doe@example.com",
+                phone: "123-456-7890",
+                address: "123 Main St, City, Country",
+                province: "Province Name"
+            };
+
+            // Display the student profile
+            document.getElementById("displayStudentId").textContent = studentProfile.studentId;
+            document.getElementById("displayFirstName").textContent = studentProfile.firstName;
+            document.getElementById("displayMiddleName").textContent = studentProfile.middleName;
+            document.getElementById("displayLastName").textContent = studentProfile.lastName;
+            document.getElementById("displayEmail").textContent = studentProfile.email;
+            document.getElementById("displayPhone").textContent = studentProfile.phone;
+            document.getElementById("displayAddress").textContent = studentProfile.address;
+            document.getElementById("displayProvince").textContent = studentProfile.province;
+
+            // Show the profile section
+            document.getElementById("studentProfile").classList.remove("hidden");
+        }
+    </script>
+</body>
+
+</html>

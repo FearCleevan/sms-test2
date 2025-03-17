@@ -420,6 +420,155 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
 
+                <div id="subject-loading-result"></div>
+
+                <script>
+                    // Handle "Enroll New Student" button click
+                    document.getElementById('enrollNewBtn').addEventListener('click', () => {
+                        document.getElementById('enrollNewBtn').style.display = 'none';
+                        document.getElementById('enrollExistingBtn').style.display = 'none';
+                        document.getElementById('enrollForm').style.display = 'block';
+                    });
+
+                    // Handle "Enroll Existing Student" button click
+                    document.getElementById('enrollExistingBtn').addEventListener('click', () => {
+                        document.getElementById('enrollNewBtn').style.display = 'none';
+                        document.getElementById('enrollExistingBtn').style.display = 'none';
+                        document.getElementById('existingStudentPopup').style.display = 'block';
+                    });
+
+                    // Handle "Submit" button click for existing student
+                    document.getElementById('submitExistingID').addEventListener('click', async () => {
+                        const studentID = document.getElementById('studentID').value;
+
+                        try {
+                            const response = await fetch(`get_student_details.php?studentID=${studentID}`);
+                            const data = await response.json();
+
+                            if (data.success) {
+                                // Display student details
+                                document.getElementById('studentProfileImage').src = data.profileImg;
+                                document.getElementById('studentIDDetails').textContent = data.studentID;
+                                document.getElementById('studentNameDetails').textContent = data.name;
+
+                                // Hide all details sections
+                                document.getElementById('jhsDetails').style.display = 'none';
+                                document.getElementById('shsDetails').style.display = 'none';
+                                document.getElementById('tvetDetails').style.display = 'none';
+                                document.getElementById('collegeDetails').style.display = 'none';
+
+                                // Show the appropriate details section based on education level
+                                if (data.educationLevel === 'JHS') {
+                                    document.getElementById('studentEduLevel').textContent = data.edu_level || 'N/A';
+                                    document.getElementById('studentGradeDetails').textContent = data.grade_level || 'N/A';
+                                    document.getElementById('jhsDetails').style.display = 'block';
+                                } else if (data.educationLevel === 'SHS') {
+                                    document.getElementById('studentEdusLevel').textContent = data.edu_level || 'N/A';
+                                    document.getElementById('studentGradesDetails').textContent = data.grade_level || 'N/A';
+                                    document.getElementById('studentTracksDetails').textContent = data.track || 'N/A';
+                                    document.getElementById('shsDetails').style.display = 'block';
+                                } else if (data.educationLevel === 'TVET') {
+                                    document.getElementById('studentTrackDetails').textContent = data.track || 'N/A';
+                                    document.getElementById('studentTrackLevelDetails').textContent = data.track_level || 'N/A';
+                                    document.getElementById('tvetDetails').style.display = 'block';
+                                } else if (data.educationLevel === 'College') {
+                                    document.getElementById('studentCourseDetails').textContent = data.course || 'N/A';
+                                    document.getElementById('studentYearDetails').textContent = data.course_level || 'N/A';
+                                    document.getElementById('collegeDetails').style.display = 'block';
+                                }
+
+                                // Add event listener to the "Load Subjects" button
+                                document.querySelectorAll('.load-button').forEach(button => {
+                                    button.addEventListener('click', async () => {
+                                        try {
+                                            const course = data.course || data.track;
+                                            const year_level = data.course_level || data.track_level;
+
+                                            console.log("Course:", course); // Debugging: Log the course
+                                            console.log("Year Level:", year_level); // Debugging: Log the year level
+
+                                            const subjectResponse = await fetch(`get_student_subjects.php?course=${course}&year_level=${year_level}`);
+                                            const subjectData = await subjectResponse.json();
+
+                                            console.log("Subject Data:", subjectData); // Debugging: Log the response from the server
+
+                                            if (subjectData.success) {
+                                                const subjectLoadingResult = document.getElementById('subject-loading-result');
+                                                subjectLoadingResult.innerHTML = '';
+
+                                                const table = document.createElement('table');
+                                                table.className = 'subjects';
+                                                table.innerHTML = `
+                                        <thead>
+                                            <tr>
+                                                <th>Subject Code</th>
+                                                <th>Description</th>
+                                                <th>Lec</th>
+                                                <th>Lab</th>
+                                                <th>Units No</th>
+                                                <th>Pre Req</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${subjectData.subjects.map(subject => `
+                                                <tr>
+                                                    <td>
+                                                        <input type="text" 
+                                                            style="width: 120px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" 
+                                                            value="${subject.subject_code}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" 
+                                                            style="width: 400px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" 
+                                                            value="${subject.description}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" 
+                                                            style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" 
+                                                            value="${subject.lec}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" 
+                                                            style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" 
+                                                            value="${subject.lab}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" 
+                                                            style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" 
+                                                            value="${subject.unit_no}" readonly>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" 
+                                                            style="width: 80px; height: 30px; border-radius: 3px; border: 1px solid #aaa; padding: 0 15px; font-size: 11px; outline: none;" 
+                                                            value="${subject.pre_req}" readonly>
+                                                    </td>
+                                                </tr>
+                                            `).join('')}
+                                        </tbody>
+                                    `;
+
+                                                subjectLoadingResult.appendChild(table);
+                                            } else {
+                                                alert('No subjects found for this student.');
+                                            }
+                                        } catch (error) {
+                                            console.error("Error fetching student subjects:", error);
+                                            alert("An error occurred while fetching student subjects.");
+                                        }
+                                    });
+                                });
+
+                                document.getElementById('studentDetails').style.display = 'block';
+                            } else {
+                                alert(data.message || "Student ID not found.");
+                            }
+                        } catch (error) {
+                            console.error("Error fetching student details:", error);
+                            alert("An error occurred while fetching student details.");
+                        }
+                    });
+                </script>
+
                 <style>
                     /* General Container */
                     .student-details {
@@ -465,183 +614,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     .load-button:hover {
                         opacity: 0.8;
                     }
-                </style>
 
-
-                <!-- <style>
-                    #studentDetails {
-                        display: none;
+                    #subject-loading-result {
                         margin-top: 20px;
-                        font-family: 'Arial', sans-serif;
-                    }
-
-                    #studentDetails h3 {
-                        font-size: 1.5em;
-                        color: #333;
-                        margin-bottom: 15px;
-                    }
-
-                    #studentDetails p {
-                        font-size: 1em;
-                        color: #555;
-                        margin: 5px 0;
-                    }
-
-                    #studentDetails p strong {
-                        color: #4070f4;
-                    }
-
-                    #studentDetails div {
-                        margin-bottom: 20px;
-                    }
-
-                    #studentDetails div button {
-                        height: 35px;
-                        margin-left: 100px;
-                        max-width: 300px;
-                        width: 100%;
-                        border: none;
-                        outline: none;
-                        color: white;
-                        border-radius: 5px;
-                        cursor: pointer;
-                        background-color: #4070f4;
-                        transition: opacity ease 0.3s, transform 0.3s ease;
-                    }
-
-                    #studentDetails div button:hover {
-                        opacity: 0.9;
-                        transform: translateY(-2px);
-                    }
-
-                    /* Styling for Department section */
-                    #studentEduLevel,
-                    #studentEdusLevel,
-                    #studentTrackDetails,
-                    #studentCourseDetails {
-                        font-weight: bold;
-                        color: #333;
-                    }
-
-                    /* Styling for subject list section */
-                    #assignedSubjects {
-                        display: none;
-                        margin-top: 20px;
-                        background-color: #f4f7fc;
-                        padding: 15px;
-                        border-radius: 10px;
-                    }
-
-                    #assignedSubjects ul {
-                        list-style-type: none;
-                        padding-left: 0;
-                    }
-
-                    #assignedSubjects li {
-                        font-size: 1.1em;
-                        color: #444;
-                        margin: 5px 0;
-                    }
-
-                    /* Visibility for subject list when clicked */
-                    #assignedSubjects.show {
-                        display: block;
-                    }
-
-                    /* Styling for each education level details */
-                    #jhsDetails,
-                    #shsDetails,
-                    #tvetDetails,
-                    #collegeDetails {
-                        display: none;
-                        padding: 15px;
+                        padding: 10px;
+                        border: 1px solid #ccc;
                         background-color: #f9f9f9;
-                        border-radius: 10px;
-                        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
                     }
-
-                    /* Responsive Design for Smaller Screens */
-                    @media screen and (max-width: 600px) {
-                        #studentDetails {
-                            margin-top: 10px;
-                        }
-
-                        #studentDetails h3 {
-                            font-size: 1.2em;
-                        }
-
-                        #studentDetails p {
-                            font-size: 0.9em;
-                        }
-
-                        #studentDetails div button {
-                            margin-left: 0;
-                            width: auto;
-                            max-width: 100%;
-                        }
-                    }
-                </style> -->
-
-
-                <script>
-                    document.getElementById('enrollNewBtn').addEventListener('click', () => {
-                        document.getElementById('enrollNewBtn').style.display = 'none';
-                        document.getElementById('enrollExistingBtn').style.display = 'none';
-                        document.getElementById('enrollForm').style.display = 'block';
-                    });
-
-                    document.getElementById('enrollExistingBtn').addEventListener('click', () => {
-                        document.getElementById('enrollNewBtn').style.display = 'none';
-                        document.getElementById('enrollExistingBtn').style.display = 'none';
-                        document.getElementById('existingStudentPopup').style.display = 'block';
-                    });
-
-                    document.getElementById('submitExistingID').addEventListener('click', async () => {
-                        const studentID = document.getElementById('studentID').value;
-
-                        try {
-                            const response = await fetch(`get_student_details.php?studentID=${studentID}`);
-                            const data = await response.json();
-
-                            if (data.success) {
-                                document.getElementById('studentProfileImage').src = data.profileImg;
-                                document.getElementById('studentIDDetails').textContent = data.studentID;
-                                document.getElementById('studentNameDetails').textContent = data.name;
-
-                                document.getElementById('jhsDetails').style.display = 'none';
-                                document.getElementById('shsDetails').style.display = 'none';
-                                document.getElementById('tvetDetails').style.display = 'none';
-                                document.getElementById('collegeDetails').style.display = 'none';
-
-                                if (data.educationLevel === 'JHS') {
-                                    document.getElementById('studentEduLevel').textContent = data.edu_level || 'N/A';
-                                    document.getElementById('studentGradeDetails').textContent = data.grade_level || 'N/A';
-                                    document.getElementById('jhsDetails').style.display = 'block';
-                                } else if (data.educationLevel === 'SHS') {
-                                    document.getElementById('studentEdusLevel').textContent = data.edu_level || 'N/A';
-                                    document.getElementById('studentGradesDetails').textContent = data.grade_level || 'N/A';
-                                    document.getElementById('studentTracksDetails').textContent = data.track || 'N/A';
-                                    document.getElementById('shsDetails').style.display = 'block';
-                                } else if (data.educationLevel === 'TVET') {
-                                    document.getElementById('studentTrackDetails').textContent = data.track || 'N/A';
-                                    document.getElementById('studentTrackLevelDetails').textContent = data.track_level || 'N/A';
-                                    document.getElementById('tvetDetails').style.display = 'block';
-                                } else if (data.educationLevel === 'College') {
-                                    document.getElementById('studentCourseDetails').textContent = data.course || 'N/A';
-                                    document.getElementById('studentYearDetails').textContent = data.course_level || 'N/A';
-                                    document.getElementById('collegeDetails').style.display = 'block';
-                                }
-
-                                document.getElementById('studentDetails').style.display = 'block';
-                            } else {
-                                alert(data.message || "Student ID not found.");
-                            }
-                        } catch (error) {
-                            console.error("Error fetching student details:", error);
-                            alert("An error occurred while fetching student details.");
-                        }
-                    });
-                </script>
+                </style>
 
 
                 <form method="POST" action="" enctype="multipart/form-data" class="enrollForm" id="enrollForm" style="display: none;">
